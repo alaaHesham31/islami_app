@@ -22,7 +22,6 @@ class _AhadethTabState extends State<AhadethTab> {
       loadHadethFile();
     }
 
-    // Screen dimensions for responsive sizing
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -33,8 +32,8 @@ class _AhadethTabState extends State<AhadethTab> {
             options: CarouselOptions(
               height: double.infinity,
               autoPlay: false,
-              enlargeCenterPage: true, // Adds spacing between items
-              viewportFraction: 0.85, // Adjusts item width
+              enlargeCenterPage: true,
+              viewportFraction: 0.85,
             ),
             items: allAhadeth.map((hadeth) {
               return Builder(
@@ -48,14 +47,14 @@ class _AhadethTabState extends State<AhadethTab> {
                       );
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.02), // Adds space between items
+                      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
                       child: Stack(
                         alignment: Alignment.topCenter,
                         children: [
                           Image.asset(
                             "assets/images/hadeth_bg.png",
-                            width: screenWidth * 0.9, // Responsive width
-                            height: screenHeight * 0.6, // Responsive height
+                            width: screenWidth * 0.9,
+                            height: screenHeight * 0.6,
                             fit: BoxFit.fill,
                           ),
                           Column(
@@ -69,7 +68,7 @@ class _AhadethTabState extends State<AhadethTab> {
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                                    fontSize: screenWidth * 0.05, // Dynamically adjust font size
+                                    fontSize: screenWidth * 0.05,
                                     color: MyThemeData.blackColor,
                                   ),
                                 ),
@@ -84,10 +83,10 @@ class _AhadethTabState extends State<AhadethTab> {
                                   child: Text(
                                     hadeth.content.first,
                                     textAlign: TextAlign.center,
-                                    maxLines: 10, // Limit lines to prevent overflow
+                                    maxLines: 10,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                      fontSize: screenWidth * 0.04, // Smaller font for smaller screens
+                                      fontSize: screenWidth * 0.04,
                                       color: MyThemeData.blackColor,
                                     ),
                                   ),

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      useInheritedMediaQuery: true, // Required for DevicePreview to work
+      useInheritedMediaQuery: true,
       theme: MyThemeData.lightTheme,
       darkTheme: MyThemeData.darkTheme,
       themeMode: ThemeMode.light,
@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
         HadethDetailsScreen.routeName: (context) => HadethDetailsScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
       },
-      locale: DevicePreview.locale(context), // Add this to simulate locale changes
-      builder: DevicePreview.appBuilder, // Add this for previewing layout changes
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
     );
   }
 }

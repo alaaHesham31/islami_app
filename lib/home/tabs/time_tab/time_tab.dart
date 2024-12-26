@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 class TimeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
 
@@ -68,7 +67,7 @@ class TimeTab extends StatelessWidget {
                   ),
                   SizedBox(height: screenHeight * 0.04),
                   Container(
-                    height: screenHeight * 0.15, // Adjusted for responsiveness
+                    height: screenHeight * 0.15,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [

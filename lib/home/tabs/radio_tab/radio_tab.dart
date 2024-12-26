@@ -151,7 +151,6 @@ class _RadioTabState extends State<RadioTab> {
                   fit: BoxFit.cover,
                 ),
               ),
-              // Play and Volume Icons
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
