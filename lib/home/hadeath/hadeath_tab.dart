@@ -73,7 +73,7 @@ class _HadeathTabState extends State<HadeathTab> {
                         scale: value,
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, HadeathDetailsScreen.routeName);
+                            Navigator.pushNamed(context, HadeathDetailsScreen.routeName, arguments: hadeathList[index]);
                           },
                           child: Container(
                             margin: EdgeInsets.symmetric(vertical: 24, horizontal: 8),
@@ -100,6 +100,8 @@ class _HadeathTabState extends State<HadeathTab> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                       textAlign: TextAlign.center,
+                                      textDirection: TextDirection.rtl,
+
                                     ),
                                     SizedBox(height: 20),
                                     Expanded(
