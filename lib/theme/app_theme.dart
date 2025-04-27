@@ -11,6 +11,12 @@ class MyThemeData{
       selectedItemColor: AppColors.whiteColor,
       unselectedItemColor: AppColors.blackColor,
       showUnselectedLabels: false,
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColors.blackColor,
+      iconTheme: IconThemeData(
+        color: AppColors.primaryColor
+      )
     )
   );
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app_demo/home/home_screen.dart';
 import 'package:islami_app_demo/home/onboarding_screen.dart';
+import 'package:islami_app_demo/home/quran/sura_details_screen.dart';
 import 'package:islami_app_demo/theme/app_theme.dart';
 
 void main() {
@@ -14,10 +15,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: OnboardingScreen.routeName,
+      initialRoute: HomeScreen.routeName,
       routes: {
         OnboardingScreen.routeName : (context) => OnboardingScreen(),
         HomeScreen.routeName : (context) => HomeScreen(),
+        SuraDetailsScreen.routeName : (context) => SuraDetailsScreen(),
+
 
       },
       theme: MyThemeData.myTheme,
