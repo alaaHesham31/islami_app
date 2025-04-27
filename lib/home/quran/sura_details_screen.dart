@@ -38,7 +38,7 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
             decoration: BoxDecoration(
               color: AppColors.blackColor,
               image: DecorationImage(
-                image: AssetImage(AppImage.quranDetailsBackground),
+                image: AssetImage(AppImage.detailsScreenBackground),
                 fit: BoxFit.fill,
               ),
             ),
@@ -96,7 +96,7 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
 
   void loadSuraFiles(int index) async {
     String suraContent = await rootBundle.loadString(
-      'assets/files/${index + 1}.txt',
+      'assets/files/quran/${index + 1}.txt',
     );
     List<String> suraLines = suraContent.split('\n');
     verses = suraLines;
