@@ -18,7 +18,8 @@ class AppImage {
   static const String sebhaBackground = 'assets/images/sebha_bg.png';
   static const String radioBackground = 'assets/images/radio_bg.png';
   static const String timeBackground = 'assets/images/time_bg.png';
-  static const String quranDetailsBackground = 'assets/images/quran_details_bg.png';
+  static const String detailsScreenBackground = 'assets/images/details_screen_bg.png';
+  static const String hadeathCardBackground = 'assets/images/hadeath_card_bg.png';
 
 
 
