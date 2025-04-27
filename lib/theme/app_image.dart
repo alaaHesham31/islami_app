@@ -20,6 +20,9 @@ class AppImage {
   static const String timeBackground = 'assets/images/time_bg.png';
   static const String detailsScreenBackground = 'assets/images/details_screen_bg.png';
   static const String hadeathCardBackground = 'assets/images/hadeath_card_bg.png';
+  static const String sebhaRotateBody = 'assets/images/sebha_rotate_body.png';
+  static const String fixedPartOfSebha = 'assets/images/fixed_part_of_sebha.png';
+
 
 
 
