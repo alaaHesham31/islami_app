@@ -4,53 +4,49 @@ import 'package:islami_app_demo/theme/app_image.dart';
 
 
 class MostRecentlyWidget extends StatelessWidget {
-  const MostRecentlyWidget({super.key});
+  String suraEnName;
+  String suraArName;
+  String versesNum;
+
+   MostRecentlyWidget({super.key, required this.suraEnName, required this.suraArName, required this.versesNum});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-
-      children: [
-        Text(
-          'Most Recently',
-          style: TextStyle(color: AppColors.whiteColor),
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.only(right: 12),
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(16),
         ),
-        SizedBox(height: 20),
-        Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  Text(
-                    'EnSuraName',
-                    style: TextStyle(color: AppColors.blackColor, fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 16,),
-                  Text(
-                    'ArSuraName',
-                    style: TextStyle(color: AppColors.blackColor, fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 16,),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Text(
+                  suraEnName,
+                  style: TextStyle(color: AppColors.blackColor, fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(height: 16,),
+                Text(
+                  suraArName ,
+                  style: TextStyle(color: AppColors.blackColor, fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(height: 16,),
 
-                  Text(
-                    'AyaNumber',
-                    style: TextStyle(color: AppColors.blackColor,fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
+                Text(
+                 versesNum ,
+                  style: TextStyle(color: AppColors.blackColor,fontSize: 18, fontWeight: FontWeight.w500),
+                ),
 
-                ],
-              ),
-              Image.asset(AppImage.mostRecentlyBackground)
-            ],
-          ),
+              ],
+            ),
+            Image.asset(AppImage.mostRecentlyBackground)
+          ],
         ),
-      ],
+      ),
     );
   }
 }
