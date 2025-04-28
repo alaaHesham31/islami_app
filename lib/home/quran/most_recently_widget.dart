@@ -8,38 +8,49 @@ class MostRecentlyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: AppColors.primaryColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+
+      children: [
+        Text(
+          'Most Recently',
+          style: TextStyle(color: AppColors.whiteColor),
+        ),
+        SizedBox(height: 20),
+        Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'EnSuraName',
-                style: TextStyle(color: AppColors.blackColor, fontSize: 18, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 16,),
-              Text(
-                'ArSuraName',
-                style: TextStyle(color: AppColors.blackColor, fontSize: 18, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 16,),
+              Column(
+                children: [
+                  Text(
+                    'EnSuraName',
+                    style: TextStyle(color: AppColors.blackColor, fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 16,),
+                  Text(
+                    'ArSuraName',
+                    style: TextStyle(color: AppColors.blackColor, fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 16,),
 
-              Text(
-                'AyaNumber',
-                style: TextStyle(color: AppColors.blackColor,fontSize: 18, fontWeight: FontWeight.w500),
-              ),
+                  Text(
+                    'AyaNumber',
+                    style: TextStyle(color: AppColors.blackColor,fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
 
+                ],
+              ),
+              Image.asset(AppImage.mostRecentlyBackground)
             ],
           ),
-          Image.asset(AppImage.mostRecentlyBackground)
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

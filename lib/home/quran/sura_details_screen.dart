@@ -20,7 +20,7 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments as SuraModel;
     if (verses.isEmpty) {
-      loadSuraFiles(args.index);
+      loadSuraFiles(args.fileName);
     }
     return Scaffold(
       appBar: AppBar(
@@ -94,9 +94,9 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
     );
   }
 
-  void loadSuraFiles(int index) async {
+  void loadSuraFiles(String fileName) async {
     String suraContent = await rootBundle.loadString(
-      'assets/files/quran/${index + 1}.txt',
+      'assets/files/quran/$fileName',
     );
     List<String> suraLines = suraContent.split('\n');
     verses = suraLines;
