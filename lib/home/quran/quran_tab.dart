@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:islami_app_demo/home/quran/most_recently_widget.dart';
 import 'package:islami_app_demo/home/quran/sura_details_screen.dart';
@@ -5,6 +7,7 @@ import 'package:islami_app_demo/home/quran/suras_list_widget.dart';
 import 'package:islami_app_demo/model/sura_model.dart';
 import 'package:islami_app_demo/theme/app_colors.dart';
 import 'package:islami_app_demo/theme/app_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuranTab extends StatefulWidget {
   QuranTab({super.key});
@@ -16,6 +19,8 @@ class QuranTab extends StatefulWidget {
 class _QuranTabState extends State<QuranTab> {
   String searchedText = '';
   List<SuraModel> filtredList = SuraModel.suraList;
+
+  List<List<String>> loadSuraList = [];
 
   void addSuraList() {
     for (int i = 0; i < 114; i++) {
@@ -32,9 +37,9 @@ class _QuranTabState extends State<QuranTab> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     addSuraList();
+    loadLastSura();
   }
 
   @override
@@ -87,7 +92,45 @@ class _QuranTabState extends State<QuranTab> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    searchedText.isNotEmpty ? SizedBox() : MostRecentlyWidget(),
+                    searchedText.isNotEmpty
+                        ? SizedBox()
+                        : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Most Recently',
+                              style: TextStyle(color: AppColors.whiteColor),
+                            ),
+                            SizedBox(height: 20),
+
+                            loadSuraList.isEmpty
+                                ? Center(
+                              child: Text(
+                                'No recently read sura yet',
+                                style: TextStyle(color: AppColors.primaryColor),
+                              ),
+                            )
+                                : SizedBox(
+                              height: 180,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: loadSuraList.length,
+                                itemBuilder: (context, index) {
+                                  if (loadSuraList[index].length != 3) {
+                                    // Skip rendering malformed entries
+                                    return SizedBox.shrink();
+                                  }
+                                  return MostRecentlyWidget(
+                                    suraEnName: loadSuraList[index][0],
+                                    suraArName: loadSuraList[index][1],
+                                    versesNum: loadSuraList[index][2],
+                                  );
+                                },
+                              ),
+                            )
+                            ,
+                          ],
+                        ),
                     SizedBox(height: 20),
                     Text(
                       'Sura List',
@@ -113,6 +156,11 @@ class _QuranTabState extends State<QuranTab> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
+                              storeLastSura(
+                                suraEnName: filtredList[index].suraEnglishName,
+                                suraArName: filtredList[index].suraArabichName,
+                                versesNum: filtredList[index].versesNumber,
+                              );
                               Navigator.pushNamed(
                                 context,
                                 SuraDetailsScreen.routeName,
@@ -136,4 +184,52 @@ class _QuranTabState extends State<QuranTab> {
       ),
     );
   }
+
+
+  storeLastSura({
+    required String suraEnName,
+    required String suraArName,
+    required String versesNum,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Get existing recent suras
+    List<String> encodedList = prefs.getStringList('recentSuras') ?? [];
+    List<List<String>> recentSuras = encodedList
+        .map((e) => List<String>.from(jsonDecode(e)))
+        .toList();
+
+    // Add new sura to top, avoiding duplicates
+    recentSuras.removeWhere((item) => item[0] == suraEnName); // optional: prevent duplicate sura
+    recentSuras.insert(0, [suraEnName, suraArName, versesNum]);
+
+    // Keep only latest 5 or 10 items (optional)
+    if (recentSuras.length > 10) recentSuras = recentSuras.sublist(0, 10);
+
+    // Store back
+    await prefs.setStringList(
+      'recentSuras',
+      recentSuras.map((e) => jsonEncode(e)).toList(),
+    );
+
+    await loadLastSura();
+  }
+
+
+  getLastSura() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> encodedList = prefs.getStringList('recentSuras') ?? [];
+    List<List<String>> decodedList = encodedList
+        .map((e) => List<String>.from(jsonDecode(e)))
+        .toList();
+    return decodedList;
+  }
+
+
+  loadLastSura() async {
+    final data = await getLastSura();
+    loadSuraList = data.where((item) => item.length == 3).toList();
+    setState(() {});
+  }
+
 }
