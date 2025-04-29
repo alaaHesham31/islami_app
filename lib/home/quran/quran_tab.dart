@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:islami_app_demo/home/quran/most_recently_widget.dart';
 import 'package:islami_app_demo/home/quran/sura_details_screen.dart';
@@ -35,7 +37,6 @@ class _QuranTabState extends State<QuranTab> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     addSuraList();
     loadLastSura();
@@ -103,23 +104,31 @@ class _QuranTabState extends State<QuranTab> {
                             SizedBox(height: 20),
 
                             loadSuraList.isEmpty
-                                ? Center(child: Text('No recently read sura yet', style: TextStyle(color: Colors.white)))
-                                :SizedBox(
+                                ? Center(
+                              child: Text(
+                                'No recently read sura yet',
+                                style: TextStyle(color: AppColors.primaryColor),
+                              ),
+                            )
+                                : SizedBox(
                               height: 180,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: loadSuraList.length,
                                 itemBuilder: (context, index) {
-                                  return Expanded(
-                                    child: MostRecentlyWidget(
-                                      suraEnName: loadSuraList[index][0],
-                                      suraArName: loadSuraList[index][1],
-                                      versesNum: loadSuraList[index][2],
-                                    ),
+                                  if (loadSuraList[index].length != 3) {
+                                    // Skip rendering malformed entries
+                                    return SizedBox.shrink();
+                                  }
+                                  return MostRecentlyWidget(
+                                    suraEnName: loadSuraList[index][0],
+                                    suraArName: loadSuraList[index][1],
+                                    versesNum: loadSuraList[index][2],
                                   );
                                 },
                               ),
-                            ),
+                            )
+                            ,
                           ],
                         ),
                     SizedBox(height: 20),
@@ -176,29 +185,51 @@ class _QuranTabState extends State<QuranTab> {
     );
   }
 
+
   storeLastSura({
     required String suraEnName,
     required String suraArName,
     required String versesNum,
   }) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('lastSura', <String>[
-      suraEnName,
-      suraArName,
-      versesNum,
-    ]);
+
+    // Get existing recent suras
+    List<String> encodedList = prefs.getStringList('recentSuras') ?? [];
+    List<List<String>> recentSuras = encodedList
+        .map((e) => List<String>.from(jsonDecode(e)))
+        .toList();
+
+    // Add new sura to top, avoiding duplicates
+    recentSuras.removeWhere((item) => item[0] == suraEnName); // optional: prevent duplicate sura
+    recentSuras.insert(0, [suraEnName, suraArName, versesNum]);
+
+    // Keep only latest 5 or 10 items (optional)
+    if (recentSuras.length > 10) recentSuras = recentSuras.sublist(0, 10);
+
+    // Store back
+    await prefs.setStringList(
+      'recentSuras',
+      recentSuras.map((e) => jsonEncode(e)).toList(),
+    );
+
     await loadLastSura();
   }
 
+
   getLastSura() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final List<String> lastSura = prefs.getStringList('lastSura') ?? [];
-    loadSuraList.insert(0, lastSura);
-    return loadSuraList;
+    final List<String> encodedList = prefs.getStringList('recentSuras') ?? [];
+    List<List<String>> decodedList = encodedList
+        .map((e) => List<String>.from(jsonDecode(e)))
+        .toList();
+    return decodedList;
   }
 
+
   loadLastSura() async {
-    loadSuraList = await getLastSura();
+    final data = await getLastSura();
+    loadSuraList = data.where((item) => item.length == 3).toList();
     setState(() {});
   }
+
 }
