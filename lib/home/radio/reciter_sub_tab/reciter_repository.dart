@@ -40,5 +40,3 @@ class ReciterRepository {
   }
 }
 
-//final padded = surahId.toString().padLeft(3, '0');
-// final url = "${server}$padded.mp3";
