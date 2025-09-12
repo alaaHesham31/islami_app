@@ -18,7 +18,7 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)?.settings.arguments as SuraModel;
+    var args = ModalRoute.of(context)?.settings.arguments as SurahModel;
     if (verses.isEmpty) {
       loadSuraFiles(args.fileName);
     }

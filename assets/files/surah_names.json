@@ -1,0 +1,800 @@
+[
+  {
+    "id": 1,
+    "arabic_name": "الفاتحة",
+    "english_name": "Al-Fatiha",
+    "verses": 7,
+    "type": "مكية"
+  },
+  {
+    "id": 2,
+    "arabic_name": "البقرة",
+    "english_name": "Al-Baqarah",
+    "verses": 286,
+    "type": "مدنية"
+  },
+  {
+    "id": 3,
+    "arabic_name": "آل عمران",
+    "english_name": "Aal-E-Imran",
+    "verses": 200,
+    "type": "مدنية"
+  },
+  {
+    "id": 4,
+    "arabic_name": "النساء",
+    "english_name": "An-Nisa'",
+    "verses": 176,
+    "type": "مدنية"
+  },
+  {
+    "id": 5,
+    "arabic_name": "المائدة",
+    "english_name": "Al-Ma'idah",
+    "verses": 120,
+    "type": "مدنية"
+  },
+  {
+    "id": 6,
+    "arabic_name": "الأنعام",
+    "english_name": "Al-An'am",
+    "verses": 165,
+    "type": "مكية"
+  },
+  {
+    "id": 7,
+    "arabic_name": "الأعراف",
+    "english_name": "Al-A'raf",
+    "verses": 206,
+    "type": "مكية"
+  },
+  {
+    "id": 8,
+    "arabic_name": "الأنفال",
+    "english_name": "Al-Anfal",
+    "verses": 75,
+    "type": "مدنية"
+  },
+  {
+    "id": 9,
+    "arabic_name": "التوبة",
+    "english_name": "At-Tawbah",
+    "verses": 129,
+    "type": "مدنية"
+  },
+  {
+    "id": 10,
+    "arabic_name": "يونس",
+    "english_name": "Yunus",
+    "verses": 109,
+    "type": "مكية"
+  },
+  {
+    "id": 11,
+    "arabic_name": "هود",
+    "english_name": "Hud",
+    "verses": 123,
+    "type": "مكية"
+  },
+  {
+    "id": 12,
+    "arabic_name": "يوسف",
+    "english_name": "Yusuf",
+    "verses": 111,
+    "type": "مكية"
+  },
+  {
+    "id": 13,
+    "arabic_name": "الرعد",
+    "english_name": "Ar-Ra'd",
+    "verses": 43,
+    "type": "مدنية"
+  },
+  {
+    "id": 14,
+    "arabic_name": "إبراهيم",
+    "english_name": "Ibrahim",
+    "verses": 52,
+    "type": "مكية"
+  },
+  {
+    "id": 15,
+    "arabic_name": "الحجر",
+    "english_name": "Al-Hijr",
+    "verses": 99,
+    "type": "مكية"
+  },
+  {
+    "id": 16,
+    "arabic_name": "النحل",
+    "english_name": "An-Nahl",
+    "verses": 128,
+    "type": "مكية"
+  },
+  {
+    "id": 17,
+    "arabic_name": "الإسراء",
+    "english_name": "Al-Isra",
+    "verses": 111,
+    "type": "مكية"
+  },
+  {
+    "id": 18,
+    "arabic_name": "الكهف",
+    "english_name": "Al-Kahf",
+    "verses": 110,
+    "type": "مكية"
+  },
+  {
+    "id": 19,
+    "arabic_name": "مريم",
+    "english_name": "Maryam",
+    "verses": 98,
+    "type": "مكية"
+  },
+  {
+    "id": 20,
+    "arabic_name": "طه",
+    "english_name": "Ta-Ha",
+    "verses": 135,
+    "type": "مكية"
+  },
+  {
+    "id": 21,
+    "arabic_name": "الأنبياء",
+    "english_name": "Al-Anbiya",
+    "verses": 112,
+    "type": "مكية"
+  },
+  {
+    "id": 22,
+    "arabic_name": "الحج",
+    "english_name": "Al-Hajj",
+    "verses": 78,
+    "type": "مدنية"
+  },
+  {
+    "id": 23,
+    "arabic_name": "المؤمنون",
+    "english_name": "Al-Mu'minun",
+    "verses": 118,
+    "type": "مكية"
+  },
+  {
+    "id": 24,
+    "arabic_name": "النور",
+    "english_name": "An-Nur",
+    "verses": 64,
+    "type": "مدنية"
+  },
+  {
+    "id": 25,
+    "arabic_name": "الفرقان",
+    "english_name": "Al-Furqan",
+    "verses": 77,
+    "type": "مكية"
+  },
+  {
+    "id": 26,
+    "arabic_name": "الشعراء",
+    "english_name": "Ash-Shu'ara",
+    "verses": 227,
+    "type": "مكية"
+  },
+  {
+    "id": 27,
+    "arabic_name": "النمل",
+    "english_name": "An-Naml",
+    "verses": 93,
+    "type": "مكية"
+  },
+  {
+    "id": 28,
+    "arabic_name": "القصص",
+    "english_name": "Al-Qasas",
+    "verses": 88,
+    "type": "مكية"
+  },
+  {
+    "id": 29,
+    "arabic_name": "العنكبوت",
+    "english_name": "Al-Ankabut",
+    "verses": 69,
+    "type": "مكية"
+  },
+  {
+    "id": 30,
+    "arabic_name": "الروم",
+    "english_name": "Ar-Rum",
+    "verses": 60,
+    "type": "مكية"
+  },
+  {
+    "id": 31,
+    "arabic_name": "لقمان",
+    "english_name": "Luqman",
+    "verses": 34,
+    "type": "مكية"
+  },
+  {
+    "id": 32,
+    "arabic_name": "السجدة",
+    "english_name": "As-Sajda",
+    "verses": 30,
+    "type": "مكية"
+  },
+  {
+    "id": 33,
+    "arabic_name": "الأحزاب",
+    "english_name": "Al-Ahzab",
+    "verses": 73,
+    "type": "مدنية"
+  },
+  {
+    "id": 34,
+    "arabic_name": "سبأ",
+    "english_name": "Saba",
+    "verses": 54,
+    "type": "مكية"
+  },
+  {
+    "id": 35,
+    "arabic_name": "فاطر",
+    "english_name": "Fatir",
+    "verses": 45,
+    "type": "مكية"
+  },
+  {
+    "id": 36,
+    "arabic_name": "يس",
+    "english_name": "Ya-Sin",
+    "verses": 83,
+    "type": "مكية"
+  },
+  {
+    "id": 37,
+    "arabic_name": "الصافات",
+    "english_name": "As-Saffat",
+    "verses": 182,
+    "type": "مكية"
+  },
+  {
+    "id": 38,
+    "arabic_name": "ص",
+    "english_name": "Sad",
+    "verses": 88,
+    "type": "مكية"
+  },
+  {
+    "id": 39,
+    "arabic_name": "الزمر",
+    "english_name": "Az-Zumar",
+    "verses": 75,
+    "type": "مكية"
+  },
+  {
+    "id": 40,
+    "arabic_name": "غافر",
+    "english_name": "Ghafir",
+    "verses": 85,
+    "type": "مكية"
+  },
+  {
+    "id": 41,
+    "arabic_name": "فصلت",
+    "english_name": "Fussilat",
+    "verses": 54,
+    "type": "مكية"
+  },
+  {
+    "id": 42,
+    "arabic_name": "الشورى",
+    "english_name": "Ash-Shura",
+    "verses": 53,
+    "type": "مكية"
+  },
+  {
+    "id": 43,
+    "arabic_name": "الزخرف",
+    "english_name": "Az-Zukhruf",
+    "verses": 89,
+    "type": "مكية"
+  },
+  {
+    "id": 44,
+    "arabic_name": "الدخان",
+    "english_name": "Ad-Dukhan",
+    "verses": 59,
+    "type": "مكية"
+  },
+  {
+    "id": 45,
+    "arabic_name": "الجاثية",
+    "english_name": "Al-Jathiya",
+    "verses": 37,
+    "type": "مكية"
+  },
+  {
+    "id": 46,
+    "arabic_name": "الأحقاف",
+    "english_name": "Al-Ahqaf",
+    "verses": 35,
+    "type": "مكية"
+  },
+  {
+    "id": 47,
+    "arabic_name": "محمد",
+    "english_name": "Muhammad",
+    "verses": 38,
+    "type": "مدنية"
+  },
+  {
+    "id": 48,
+    "arabic_name": "الفتح",
+    "english_name": "Al-Fath",
+    "verses": 29,
+    "type": "مدنية"
+  },
+  {
+    "id": 49,
+    "arabic_name": "الحجرات",
+    "english_name": "Al-Hujurat",
+    "verses": 18,
+    "type": "مدنية"
+  },
+  {
+    "id": 50,
+    "arabic_name": "ق",
+    "english_name": "Qaf",
+    "verses": 45,
+    "type": "مكية"
+  },
+  {
+    "id": 51,
+    "arabic_name": "الذاريات",
+    "english_name": "Adh-Dhariyat",
+    "verses": 60,
+    "type": "مكية"
+  },
+  {
+    "id": 52,
+    "arabic_name": "الطور",
+    "english_name": "At-Tur",
+    "verses": 49,
+    "type": "مكية"
+  },
+  {
+    "id": 53,
+    "arabic_name": "النجم",
+    "english_name": "An-Najm",
+    "verses": 62,
+    "type": "مكية"
+  },
+  {
+    "id": 54,
+    "arabic_name": "القمر",
+    "english_name": "Al-Qamar",
+    "verses": 55,
+    "type": "مكية"
+  },
+  {
+    "id": 55,
+    "arabic_name": "الرحمن",
+    "english_name": "Ar-Rahman",
+    "verses": 78,
+    "type": "مدنية"
+  },
+  {
+    "id": 56,
+    "arabic_name": "الواقعة",
+    "english_name": "Al-Waqi'a",
+    "verses": 96,
+    "type": "مكية"
+  },
+  {
+    "id": 57,
+    "arabic_name": "الحديد",
+    "english_name": "Al-Hadid",
+    "verses": 29,
+    "type": "مدنية"
+  },
+  {
+    "id": 58,
+    "arabic_name": "المجادلة",
+    "english_name": "Al-Mujadila",
+    "verses": 22,
+    "type": "مدنية"
+  },
+  {
+    "id": 59,
+    "arabic_name": "الحشر",
+    "english_name": "Al-Hashr",
+    "verses": 24,
+    "type": "مدنية"
+  },
+  {
+    "id": 60,
+    "arabic_name": "الممتحنة",
+    "english_name": "Al-Mumtahina",
+    "verses": 13,
+    "type": "مدنية"
+  },
+  {
+    "id": 61,
+    "arabic_name": "الصف",
+    "english_name": "As-Saff",
+    "verses": 14,
+    "type": "مدنية"
+  },
+  {
+    "id": 62,
+    "arabic_name": "الجمعة",
+    "english_name": "Al-Jumu'a",
+    "verses": 11,
+    "type": "مدنية"
+  },
+  {
+    "id": 63,
+    "arabic_name": "المنافقون",
+    "english_name": "Al-Munafiqun",
+    "verses": 11,
+    "type": "مدنية"
+  },
+  {
+    "id": 64,
+    "arabic_name": "التغابن",
+    "english_name": "At-Taghabun",
+    "verses": 18,
+    "type": "مدنية"
+  },
+  {
+    "id": 65,
+    "arabic_name": "الطلاق",
+    "english_name": "At-Talaq",
+    "verses": 12,
+    "type": "مدنية"
+  },
+  {
+    "id": 66,
+    "arabic_name": "التحريم",
+    "english_name": "At-Tahrim",
+    "verses": 12,
+    "type": "مدنية"
+  },
+  {
+    "id": 67,
+    "arabic_name": "الملك",
+    "english_name": "Al-Mulk",
+    "verses": 30,
+    "type": "مكية"
+  },
+  {
+    "id": 68,
+    "arabic_name": "القلم",
+    "english_name": "Al-Qalam",
+    "verses": 52,
+    "type": "مكية"
+  },
+  {
+    "id": 69,
+    "arabic_name": "الحاقة",
+    "english_name": "Al-Haqqah",
+    "verses": 52,
+    "type": "مكية"
+  },
+  {
+    "id": 70,
+    "arabic_name": "المعارج",
+    "english_name": "Al-Ma'arij",
+    "verses": 44,
+    "type": "مكية"
+  },
+  {
+    "id": 71,
+    "arabic_name": "نوح",
+    "english_name": "Nuh",
+    "verses": 28,
+    "type": "مكية"
+  },
+  {
+    "id": 72,
+    "arabic_name": "الجن",
+    "english_name": "Al-Jinn",
+    "verses": 28,
+    "type": "مكية"
+  },
+  {
+    "id": 73,
+    "arabic_name": "المزمل",
+    "english_name": "Al-Muzzammil",
+    "verses": 20,
+    "type": "مكية"
+  },
+  {
+    "id": 74,
+    "arabic_name": "المدثر",
+    "english_name": "Al-Muddathir",
+    "verses": 56,
+    "type": "مكية"
+  },
+  {
+    "id": 75,
+    "arabic_name": "القيامة",
+    "english_name": "Al-Qiyama",
+    "verses": 40,
+    "type": "مكية"
+  },
+  {
+    "id": 76,
+    "arabic_name": "الإنسان",
+    "english_name": "Al-Insan",
+    "verses": 31,
+    "type": "مدنية"
+  },
+  {
+    "id": 77,
+    "arabic_name": "المرسلات",
+    "english_name": "Al-Mursalat",
+    "verses": 50,
+    "type": "مكية"
+  },
+  {
+    "id": 78,
+    "arabic_name": "النبأ",
+    "english_name": "An-Naba",
+    "verses": 40,
+    "type": "مكية"
+  },
+  {
+    "id": 79,
+    "arabic_name": "النازعات",
+    "english_name": "An-Nazi'at",
+    "verses": 46,
+    "type": "مكية"
+  },
+  {
+    "id": 80,
+    "arabic_name": "عبس",
+    "english_name": "Abasa",
+    "verses": 42,
+    "type": "مكية"
+  },
+  {
+    "id": 81,
+    "arabic_name": "التكوير",
+    "english_name": "At-Takwir",
+    "verses": 29,
+    "type": "مكية"
+  },
+  {
+    "id": 82,
+    "arabic_name": "الانفطار",
+    "english_name": "Al-Infitar",
+    "verses": 19,
+    "type": "مكية"
+  },
+  {
+    "id": 83,
+    "arabic_name": "المطففين",
+    "english_name": "Al-Mutaffifin",
+    "verses": 36,
+    "type": "مكية"
+  },
+  {
+    "id": 84,
+    "arabic_name": "الانشقاق",
+    "english_name": "Al-Inshiqaq",
+    "verses": 25,
+    "type": "مكية"
+  },
+  {
+    "id": 85,
+    "arabic_name": "البروج",
+    "english_name": "Al-Buruj",
+    "verses": 22,
+    "type": "مكية"
+  },
+  {
+    "id": 86,
+    "arabic_name": "الطارق",
+    "english_name": "At-Tariq",
+    "verses": 17,
+    "type": "مكية"
+  },
+  {
+    "id": 87,
+    "arabic_name": "الأعلى",
+    "english_name": "Al-Ala",
+    "verses": 19,
+    "type": "مكية"
+  },
+  {
+    "id": 88,
+    "arabic_name": "الغاشية",
+    "english_name": "Al-Ghashiya",
+    "verses": 26,
+    "type": "مكية"
+  },
+  {
+    "id": 89,
+    "arabic_name": "الفجر",
+    "english_name": "Al-Fajr",
+    "verses": 30,
+    "type": "مكية"
+  },
+  {
+    "id": 90,
+    "arabic_name": "البلد",
+    "english_name": "Al-Balad",
+    "verses": 20,
+    "type": "مكية"
+  },
+  {
+    "id": 91,
+    "arabic_name": "الشمس",
+    "english_name": "Ash-Shams",
+    "verses": 15,
+    "type": "مكية"
+  },
+  {
+    "id": 92,
+    "arabic_name": "الليل",
+    "english_name": "Al-Lail",
+    "verses": 21,
+    "type": "مكية"
+  },
+  {
+    "id": 93,
+    "arabic_name": "الضحى",
+    "english_name": "Ad-Duha",
+    "verses": 11,
+    "type": "مكية"
+  },
+  {
+    "id": 94,
+    "arabic_name": "الشرح",
+    "english_name": "Ash-Sharh",
+    "verses": 8,
+    "type": "مكية"
+  },
+  {
+    "id": 95,
+    "arabic_name": "التين",
+    "english_name": "At-Tin",
+    "verses": 8,
+    "type": "مكية"
+  },
+  {
+    "id": 96,
+    "arabic_name": "العلق",
+    "english_name": "Al-Alaq",
+    "verses": 19,
+    "type": "مكية"
+  },
+  {
+    "id": 97,
+    "arabic_name": "القدر",
+    "english_name": "Al-Qadr",
+    "verses": 5,
+    "type": "مكية"
+  },
+  {
+    "id": 98,
+    "arabic_name": "البينة",
+    "english_name": "Al-Bayyina",
+    "verses": 8,
+    "type": "مدنية"
+  },
+  {
+    "id": 99,
+    "arabic_name": "الزلزلة",
+    "english_name": "Az-Zalzala",
+    "verses": 8,
+    "type": "مدنية"
+  },
+  {
+    "id": 100,
+    "arabic_name": "العاديات",
+    "english_name": "Al-Adiyat",
+    "verses": 11,
+    "type": "مكية"
+  },
+  {
+    "id": 101,
+    "arabic_name": "القارعة",
+    "english_name": "Al-Qaria",
+    "verses": 11,
+    "type": "مكية"
+  },
+  {
+    "id": 102,
+    "arabic_name": "التكاثر",
+    "english_name": "At-Takathur",
+    "verses": 8,
+    "type": "مكية"
+  },
+  {
+    "id": 103,
+    "arabic_name": "العصر",
+    "english_name": "Al-Asr",
+    "verses": 3,
+    "type": "مكية"
+  },
+  {
+    "id": 104,
+    "arabic_name": "الهمزة",
+    "english_name": "Al-Humazah",
+    "verses": 9,
+    "type": "مكية"
+  },
+  {
+    "id": 105,
+    "arabic_name": "الفيل",
+    "english_name": "Al-Fil",
+    "verses": 5,
+    "type": "مكية"
+  },
+  {
+    "id": 106,
+    "arabic_name": "قريش",
+    "english_name": "Quraish",
+    "verses": 4,
+    "type": "مكية"
+  },
+  {
+    "id": 107,
+    "arabic_name": "الماعون",
+    "english_name": "Al-Ma'un",
+    "verses": 7,
+    "type": "مكية"
+  },
+  {
+    "id": 108,
+    "arabic_name": "الكوثر",
+    "english_name": "Al-Kawthar",
+    "verses": 3,
+    "type": "مكية"
+  },
+  {
+    "id": 109,
+    "arabic_name": "الكافرون",
+    "english_name": "Al-Kafirun",
+    "verses": 6,
+    "type": "مكية"
+  },
+  {
+    "id": 110,
+    "arabic_name": "النصر",
+    "english_name": "An-Nasr",
+    "verses": 3,
+    "type": "مدنية"
+  },
+  {
+    "id": 111,
+    "arabic_name": "المسد",
+    "english_name": "Al-Masad",
+    "verses": 5,
+    "type": "مكية"
+  },
+  {
+    "id": 112,
+    "arabic_name": "الإخلاص",
+    "english_name": "Al-Ikhlas",
+    "verses": 4,
+    "type": "مكية"
+  },
+  {
+    "id": 113,
+    "arabic_name": "الفلق",
+    "english_name": "Al-Falaq",
+    "verses": 5,
+    "type": "مكية"
+  },
+  {
+    "id": 114,
+    "arabic_name": "الناس",
+    "english_name": "An-Nas",
+    "verses": 6,
+    "type": "مكية"
+  }
+]

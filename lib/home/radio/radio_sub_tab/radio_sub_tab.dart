@@ -2,10 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:islami_app_demo/home/radio/radio_sub_tab/radio_player_notifier.dart';
+import 'package:islami_app_demo/home/radio/global_player/global_play_states.dart';
+import 'package:islami_app_demo/home/radio/global_player/global_player_notifier.dart';
 import 'package:islami_app_demo/home/radio/radio_sub_tab/radio_provider.dart';
-import 'package:islami_app_demo/home/radio/radio_sub_tab/radio_player_states.dart';
-
 import 'package:islami_app_demo/theme/app_colors.dart';
 import 'package:islami_app_demo/theme/app_image.dart';
 
@@ -15,14 +14,12 @@ class RadioSubTabContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final radiosAsync = ref.watch(radioListProvider);
-    final playerState = ref.watch(radioPlayerProvider);
-    final player = ref.read(radioPlayerProvider.notifier);
+    final playerState = ref.watch(globalPlayerProvider);
+    final player = ref.read(globalPlayerProvider.notifier);
 
     return radiosAsync.when(
-      loading:
-          () => const Center(
-            child: CircularProgressIndicator(color: AppColors.primaryColor),
-          ),
+      loading: () =>
+      const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
       error: (err, stack) => Center(child: Text("Error: $err")),
       data: (radios) {
         return ListView.separated(
@@ -31,10 +28,10 @@ class RadioSubTabContent extends ConsumerWidget {
           itemCount: radios.length,
           itemBuilder: (context, index) {
             final radio = radios[index];
-            final isThisRadio = playerState.currentRadio?.url == radio.url;
+            final isThisRadio = playerState.url == radio.url;
             final isPlayingThis =
                 isThisRadio && playerState.status == PlayerStatus.playing;
-            final isMutedThis = playerState.isMuted(radio.url!);
+
             return Container(
               height: 120,
               decoration: BoxDecoration(
@@ -42,9 +39,7 @@ class RadioSubTabContent extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
                   image: AssetImage(
-                    isPlayingThis
-                        ? AppImage.soundWaveImage
-                        : AppImage.mosqueImage,
+                    isPlayingThis ? AppImage.soundWaveImage : AppImage.mosqueImage,
                   ),
                   fit: BoxFit.contain,
                   alignment: Alignment.bottomCenter,
@@ -74,7 +69,7 @@ class RadioSubTabContent extends ConsumerWidget {
                             if (isPlayingThis) {
                               player.pause();
                             } else {
-                              player.play(radio);
+                              player.playRadio(radio.url ?? '', radio.name ?? '');
                             }
                           },
                           icon: FaIcon(
@@ -86,11 +81,9 @@ class RadioSubTabContent extends ConsumerWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () async {
-                            await player.toggleMute(radio);
-                          },
+                          onPressed: player.toggleMute,
                           icon: FaIcon(
-                            isMutedThis
+                            playerState.isMuted
                                 ? FontAwesomeIcons.volumeXmark
                                 : FontAwesomeIcons.volumeHigh,
                             color: AppColors.blackColor,
