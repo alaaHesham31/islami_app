@@ -14,6 +14,7 @@ class MiniPlayer extends ConsumerWidget {
     final playerState = ref.watch(globalPlayerProvider);
     final player = ref.read(globalPlayerProvider.notifier);
 
+
     //  Hide MiniPlayer if nothing is playing or loaded
     if (playerState.status == PlayerStatus.stopped || playerState.url == null) {
       return const SizedBox.shrink();
@@ -129,6 +130,7 @@ class MiniPlayer extends ConsumerWidget {
                 ),
               ],
             ),
+
         ],
       ),
     );

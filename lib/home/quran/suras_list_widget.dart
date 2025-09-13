@@ -4,9 +4,9 @@ import 'package:islami_app_demo/theme/app_colors.dart';
 import 'package:islami_app_demo/theme/app_image.dart';
 
 class SurasListWidget extends StatelessWidget {
-  SurasListWidget({super.key, required this.suraModel, required this.index});
+  SurasListWidget({super.key, required this.surahModel, required this.index});
 
-  SuraModel suraModel;
+  SurahModel surahModel;
   int index;
 
   @override
@@ -26,19 +26,19 @@ class SurasListWidget extends StatelessWidget {
         SizedBox(width: 16),
         Column(
           children: [
+            // Text(
+            //   surahModel.suraEnglishName,
+            //   style: TextStyle(color: AppColors.whiteColor),
+            // ),
             Text(
-              suraModel.suraEnglishName,
-              style: TextStyle(color: AppColors.whiteColor),
-            ),
-            Text(
-              '${suraModel.versesNumber} Verses',
+              '${surahModel.versesNumber} Verses',
               style: TextStyle(color: AppColors.whiteColor),
             ),
           ],
         ),
         Spacer(),
         Text(
-          suraModel.suraArabichName,
+          surahModel.suraArabichName,
           style: TextStyle(color: AppColors.whiteColor, fontSize: 18),
         ),
       ],

@@ -17,6 +17,7 @@ class RadioSubTabContent extends ConsumerWidget {
     final playerState = ref.watch(globalPlayerProvider);
     final player = ref.read(globalPlayerProvider.notifier);
 
+
     return radiosAsync.when(
       loading: () =>
       const Center(child: CircularProgressIndicator(color: AppColors.primaryColor)),
@@ -69,7 +70,7 @@ class RadioSubTabContent extends ConsumerWidget {
                             if (isPlayingThis) {
                               player.pause();
                             } else {
-                              player.playRadio(radio.url ?? '', radio.name ?? '');
+                              player.playOrToggleRadio(radio.url ?? '', radio.name ?? '');
                             }
                           },
                           icon: FaIcon(

@@ -18,17 +18,17 @@ class QuranTab extends StatefulWidget {
 
 class _QuranTabState extends State<QuranTab> {
   String searchedText = '';
-  List<SuraModel> filtredList = SuraModel.suraList;
+  List<SurahModel> filtredList = SurahModel.suraList;
 
   List<List<String>> loadSuraList = [];
 
   void addSuraList() {
     for (int i = 0; i < 114; i++) {
-      SuraModel.suraList.add(
-        SuraModel(
-          suraEnglishName: SuraModel.englishQuranSurahsList[i],
-          suraArabichName: SuraModel.arabicAuranSurasList[i],
-          versesNumber: SuraModel.VersesNumberList[i],
+      SurahModel.suraList.add(
+        SurahModel(
+          suraEnglishName: SurahModel.englishQuranSurahsList[i],
+          suraArabichName: SurahModel.arabicAuranSurasList[i],
+          versesNumber: SurahModel.VersesNumberList[i],
           fileName: '${i + 1}.txt',
         ),
       );
@@ -62,7 +62,7 @@ class _QuranTabState extends State<QuranTab> {
                       onChanged: (text) {
                         searchedText = text;
                         filtredList =
-                            SuraModel.suraList.where((suraModel) {
+                            SurahModel.suraList.where((suraModel) {
                               return suraModel.suraArabichName.contains(
                                     searchedText,
                                   ) ||
@@ -168,7 +168,7 @@ class _QuranTabState extends State<QuranTab> {
                               );
                             },
                             child: SurasListWidget(
-                              suraModel: filtredList[index],
+                              surahModel: filtredList[index],
                               index: index,
                             ),
                           );
