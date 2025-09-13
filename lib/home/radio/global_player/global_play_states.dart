@@ -14,6 +14,7 @@ class GlobalPlayerState {
   final Duration position;
   final bool isMuted;
   final String? errorMessage;
+  final bool isLocal; 
 
 
   const GlobalPlayerState({
@@ -26,7 +27,7 @@ class GlobalPlayerState {
     this.position = Duration.zero,
     this.isMuted = false,
     this.errorMessage,
-
+    this.isLocal = false,
   });
 
   GlobalPlayerState copyWith({
@@ -39,6 +40,7 @@ class GlobalPlayerState {
     Duration? position,
     bool? isMuted,
     String? errorMessage,
+     bool? isLocal,
   }) {
     return GlobalPlayerState(
       sourceType: sourceType ?? this.sourceType,
@@ -50,6 +52,7 @@ class GlobalPlayerState {
       position: position ?? this.position,
       isMuted: isMuted ?? this.isMuted,
        errorMessage: errorMessage ?? this.errorMessage, 
+       isLocal: isLocal ?? this.isLocal
     );
   }
 }
