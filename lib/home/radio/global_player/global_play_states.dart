@@ -6,13 +6,15 @@ enum PlayerStatus { idle, loading, playing, paused, stopped }
 @immutable
 class GlobalPlayerState {
   final PlayerSourceType? sourceType;
-  final String? title;     // surah or radio name
-  final String? subtitle;  // reciter name or live stream label
+  final String? title;     
+  final String? subtitle; 
   final String? url;
   final PlayerStatus status;
   final Duration duration;
   final Duration position;
   final bool isMuted;
+  final String? errorMessage;
+
 
   const GlobalPlayerState({
     this.sourceType,
@@ -23,6 +25,8 @@ class GlobalPlayerState {
     this.duration = Duration.zero,
     this.position = Duration.zero,
     this.isMuted = false,
+    this.errorMessage,
+
   });
 
   GlobalPlayerState copyWith({
@@ -34,6 +38,7 @@ class GlobalPlayerState {
     Duration? duration,
     Duration? position,
     bool? isMuted,
+    String? errorMessage,
   }) {
     return GlobalPlayerState(
       sourceType: sourceType ?? this.sourceType,
@@ -44,6 +49,7 @@ class GlobalPlayerState {
       duration: duration ?? this.duration,
       position: position ?? this.position,
       isMuted: isMuted ?? this.isMuted,
+       errorMessage: errorMessage ?? this.errorMessage, 
     );
   }
 }

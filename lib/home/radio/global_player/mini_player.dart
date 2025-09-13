@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:islami_app_demo/home/radio/global_player/global_play_states.dart' show PlayerSourceType, PlayerStatus;
+import 'package:islami_app_demo/home/radio/global_player/global_play_states.dart'
+    show PlayerSourceType, PlayerStatus;
 import 'package:islami_app_demo/home/radio/global_player/global_player_notifier.dart';
 import 'package:islami_app_demo/theme/app_colors.dart';
 import 'package:islami_app_demo/theme/app_styles.dart';
@@ -14,16 +15,46 @@ class MiniPlayer extends ConsumerWidget {
     final playerState = ref.watch(globalPlayerProvider);
     final player = ref.read(globalPlayerProvider.notifier);
 
-
-    //  Hide MiniPlayer if nothing is playing or loaded
     if (playerState.status == PlayerStatus.stopped || playerState.url == null) {
       return const SizedBox.shrink();
     }
 
     final duration = playerState.duration ?? Duration.zero;
     final position = playerState.position ?? Duration.zero;
-    final durationSeconds = duration.inSeconds.toDouble().clamp(0.0, double.infinity);
-    final positionSeconds = position.inSeconds.toDouble().clamp(0.0, durationSeconds);
+    final durationSeconds = duration.inSeconds.toDouble().clamp(
+      0.0,
+      double.infinity,
+    );
+    final positionSeconds = position.inSeconds.toDouble().clamp(
+      0.0,
+      durationSeconds,
+    );
+
+    if (playerState.errorMessage != null) {
+      return Container(
+        padding: const EdgeInsets.all(12),
+        color: Colors.redAccent,
+        child: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.white),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                playerState.errorMessage!,
+                style: const TextStyle(color: Colors.white),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: () {
+                ref.read(globalPlayerProvider.notifier).stop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -38,7 +69,7 @@ class MiniPlayer extends ConsumerWidget {
             color: Colors.black.withValues(alpha: 0.25),
             blurRadius: 6,
             offset: const Offset(0, -2),
-          )
+          ),
         ],
       ),
       child: Column(
@@ -53,14 +84,18 @@ class MiniPlayer extends ConsumerWidget {
                   children: [
                     Text(
                       playerState.title ?? '',
-                      style: AppStyles.bold16Primary.copyWith(color: Colors.white),
+                      style: AppStyles.bold16Primary.copyWith(
+                        color: Colors.white,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     if (playerState.subtitle != null)
                       Text(
                         playerState.subtitle!,
-                        style: AppStyles.semi16White.copyWith(color: Colors.white70),
+                        style: AppStyles.semi16White.copyWith(
+                          color: Colors.white70,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -72,7 +107,10 @@ class MiniPlayer extends ConsumerWidget {
                 const SizedBox(
                   width: 24,
                   height: 24,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
                 )
               else
                 IconButton(
@@ -93,13 +131,18 @@ class MiniPlayer extends ConsumerWidget {
                 ),
               IconButton(
                 onPressed: () => player.stop(),
-                icon: const FaIcon(FontAwesomeIcons.stop, color: Colors.white, size: 20),
+                icon: const FaIcon(
+                  FontAwesomeIcons.stop,
+                  color: Colors.white,
+                  size: 20,
+                ),
               ),
             ],
           ),
 
           // ✅ Show progress bar only for Surah playback
-          if (playerState.sourceType == PlayerSourceType.reciter && durationSeconds > 0)
+          if (playerState.sourceType == PlayerSourceType.reciter &&
+              durationSeconds > 0)
             Row(
               children: [
                 Text(
@@ -110,7 +153,9 @@ class MiniPlayer extends ConsumerWidget {
                   child: SliderTheme(
                     data: SliderTheme.of(context).copyWith(
                       trackHeight: 2,
-                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
+                      thumbShape: const RoundSliderThumbShape(
+                        enabledThumbRadius: 6,
+                      ),
                     ),
                     child: Slider(
                       min: 0,
@@ -130,7 +175,6 @@ class MiniPlayer extends ConsumerWidget {
                 ),
               ],
             ),
-
         ],
       ),
     );
