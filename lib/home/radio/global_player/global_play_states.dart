@@ -1,4 +1,3 @@
-// lib/home/radio/global_player_state.dart
 import 'package:flutter/foundation.dart';
 
 enum PlayerSourceType { reciter, radio }
@@ -6,13 +5,13 @@ enum PlayerStatus { idle, loading, playing, paused, stopped }
 
 @immutable
 class GlobalPlayerState {
-  final PlayerSourceType? sourceType; // reciter or radio
-  final String? title; // surah name or radio station
-  final String? subtitle; // reciter name or "Live Stream"
+  final PlayerSourceType? sourceType;
+  final String? title;     // surah or radio name
+  final String? subtitle;  // reciter name or live stream label
   final String? url;
   final PlayerStatus status;
-  final Duration position;
   final Duration duration;
+  final Duration position;
   final bool isMuted;
 
   const GlobalPlayerState({
@@ -21,8 +20,8 @@ class GlobalPlayerState {
     this.subtitle,
     this.url,
     this.status = PlayerStatus.idle,
-    this.position = Duration.zero,
     this.duration = Duration.zero,
+    this.position = Duration.zero,
     this.isMuted = false,
   });
 
@@ -32,8 +31,8 @@ class GlobalPlayerState {
     String? subtitle,
     String? url,
     PlayerStatus? status,
-    Duration? position,
     Duration? duration,
+    Duration? position,
     bool? isMuted,
   }) {
     return GlobalPlayerState(
@@ -42,8 +41,8 @@ class GlobalPlayerState {
       subtitle: subtitle ?? this.subtitle,
       url: url ?? this.url,
       status: status ?? this.status,
-      position: position ?? this.position,
       duration: duration ?? this.duration,
+      position: position ?? this.position,
       isMuted: isMuted ?? this.isMuted,
     );
   }

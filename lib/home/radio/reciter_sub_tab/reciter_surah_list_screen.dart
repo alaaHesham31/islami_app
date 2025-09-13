@@ -21,6 +21,7 @@ class ReciterSurahListScreen extends ConsumerWidget {
     final playerState = ref.watch(globalPlayerProvider);
     final player = ref.read(globalPlayerProvider.notifier);
 
+
     final args =
     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
@@ -81,7 +82,7 @@ class ReciterSurahListScreen extends ConsumerWidget {
                                 if (isThisPlaying) {
                                   player.pause();
                                 } else {
-                                  player.playReciter(
+                                  player.playOrToggleReciter(
                                     url,
                                     suraItem.arabicName ?? '',
                                     reciterName,
