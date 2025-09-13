@@ -1,52 +1,56 @@
-class RadioResponseModel {
-  RadioResponseModel({
-      this.radios,});
+import 'package:hive/hive.dart';
 
-  RadioResponseModel.fromJson(dynamic json) {
-    if (json['radios'] != null) {
-      radios = [];
-      json['radios'].forEach((v) {
-        radios?.add(RadiosModel.fromJson(v));
-      });
-    }
-  }
-  List<RadiosModel>? radios;
+part 'RadioResponseModel.g.dart'; 
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (radios != null) {
-      map['radios'] = radios?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-
-}
-
+@HiveType(typeId: 2) 
 class RadiosModel {
-  RadiosModel({
-      this.id, 
-      this.name, 
-      this.url, 
-      this.recentDate,});
-
-  RadiosModel.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    url = json['url'];
-    recentDate = json['recent_date'];
-  }
+  @HiveField(0)
   num? id;
+
+  @HiveField(1)
   String? name;
+
+  @HiveField(2)
   String? url;
+
+  @HiveField(3)
   String? recentDate;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['url'] = url;
-    map['recent_date'] = recentDate;
-    return map;
+  RadiosModel({
+    this.id,
+    this.name,
+    this.url,
+    this.recentDate,
+  });
+
+  factory RadiosModel.fromJson(Map<String, dynamic> json) {
+    return RadiosModel(
+      id: json['id'],
+      name: json['name'],
+      url: json['url'],
+      recentDate: json['recent_date'],
+    );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'url': url,
+      'recent_date': recentDate,
+    };
+  }
+}
+
+class RadioResponseModel {
+  List<RadiosModel>? radios;
+
+  RadioResponseModel({this.radios});
+
+  factory RadioResponseModel.fromJson(Map<String, dynamic> json) {
+    final list = (json['radios'] as List<dynamic>? ?? []);
+    return RadioResponseModel(
+      radios: list.map((v) => RadiosModel.fromJson(v)).toList(),
+    );
+  }
 }

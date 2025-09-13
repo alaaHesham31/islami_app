@@ -45,53 +45,59 @@ class GlobalPlayerNotifier extends StateNotifier<GlobalPlayerState> {
 
   int _playRequestId = 0;
 
-  Future<void> playOrToggleReciter(
-    String url,
-    String surahName,
-    String reciterName,
-  ) async {
-    if (state.url == url) {
-      if (state.status == PlayerStatus.playing) {
-        await pause();
-      } else {
-        await resume();
-      }
-      return;
+ Future<void> playOrToggleReciter(
+  String urlOrPath,
+  String surahName,
+  String reciterName, {
+  bool isLocal = false,
+}) async {
+  if (state.url == urlOrPath) {
+    if (state.status == PlayerStatus.playing) {
+      await pause();
+    } else {
+      await resume();
     }
-    await _playReciterInternal(url, surahName, reciterName);
+    return;
   }
+  await _playReciterInternal(urlOrPath, surahName, reciterName, isLocal: isLocal);
+}
 
-  Future<void> _playReciterInternal(
-    String url,
-    String surahName,
-    String reciterName,
-  ) async {
-    final int reqId = ++_playRequestId;
-    try {
-      await _player.stop();
-      state = state.copyWith(
-        sourceType: PlayerSourceType.reciter,
-        title: surahName,
-        subtitle: reciterName,
-        url: url,
-        status: PlayerStatus.loading,
-        position: Duration.zero,
-        duration: Duration.zero,
-      );
+Future<void> _playReciterInternal(
+  String urlOrPath,
+  String surahName,
+  String reciterName, {
+  bool isLocal = false,
+}) async {
+  final int reqId = ++_playRequestId;
+  try {
+    await _player.stop();
+    state = state.copyWith(
+      sourceType: PlayerSourceType.reciter,
+      title: surahName,
+      subtitle: reciterName,
+      url: urlOrPath,
+      status: PlayerStatus.loading,
+      position: Duration.zero,
+      duration: Duration.zero,
+    );
 
-      await _player.setUrl(url); 
-      // if a newer play request started while we awaited, abort
-      if (reqId != _playRequestId) return;
-      await _player.play();
-    } catch (e) {
-      // reset on error
-      state = state.copyWith(
-        status: PlayerStatus.stopped,
-        errorMessage: "تعذر تشغيل الملف الصوتي. تحقق من اتصال الإنترنت.",
-      );
-      debugPrint("Error playing reciter: $e");
+    if (isLocal) {
+      await _player.setFilePath(urlOrPath); // لو ملف محلي
+    } else {
+      await _player.setUrl(urlOrPath); // لو stream من الانترنت
     }
+
+    if (reqId != _playRequestId) return;
+    await _player.play();
+  } catch (e) {
+    state = state.copyWith(
+      status: PlayerStatus.stopped,
+      errorMessage: "تعذر تشغيل الملف الصوتي. تحقق من اتصال الإنترنت أو الملف المحلي.",
+    );
+    debugPrint("Error playing reciter: $e");
   }
+}
+
 
   Future<void> playOrToggleRadio(String url, String radioName) async {
     if (state.url == url) {

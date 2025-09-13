@@ -20,7 +20,6 @@ class ReciterModel {
   });
 
   factory ReciterModel.fromJson(Map<String, dynamic> json) {
-    // safe parse id (could be int or string)
     final rawId = json['id'];
     final int id = rawId is int ? rawId : int.tryParse(rawId.toString()) ?? 0;
 
@@ -64,7 +63,6 @@ class MoshafModel {
 
     final name = (json['name'] ?? '').toString();
     final server = (json['server'] ?? '').toString();
-    // API uses "surah_list" name
     final surahList = (json['surah_list'] ?? json['surahList'] ?? '').toString();
 
     return MoshafModel(
