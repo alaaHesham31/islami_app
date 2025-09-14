@@ -1,9 +1,9 @@
-class SuraModel {
+class SurahModel {
   String suraEnglishName;
   String suraArabichName;
   String versesNumber;
  String fileName;
-  SuraModel({
+  SurahModel({
     required this.suraEnglishName,
     required this.suraArabichName,
     required this.versesNumber,
@@ -358,7 +358,7 @@ class SuraModel {
     '5',
     '6',
   ];
-  static List<SuraModel> suraList= [];
+  static List<SurahModel> suraList= [];
 
   static int getSurasCount() => englishQuranSurahsList.length;
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:islami_app_demo/api/api_constants.dart';
+import 'package:islami_app_demo/services/api/api_constants.dart';
 
 class ApiManager {
   // get data

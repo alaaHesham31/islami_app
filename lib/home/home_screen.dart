@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:islami_app_demo/home/hadeath/hadeath_tab.dart';
 import 'package:islami_app_demo/home/quran/quran_tab.dart';
 import 'package:islami_app_demo/home/radio/radio_tab.dart';
+import 'package:islami_app_demo/home/radio/global_player/mini_player.dart';
 import 'package:islami_app_demo/home/sebha/sebha_tab.dart';
 import 'package:islami_app_demo/home/time/time_tab.dart';
 import 'package:islami_app_demo/theme/app_colors.dart';
@@ -17,12 +18,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedIndex = 0;
+  int selectedIndex = 4;
 
   final List<Widget> tabs = [
     QuranTab(),
     HadeathTab(),
-    SebhaTab(),
+    const SebhaTab(),
     RadioTab(),
     TimeTab(),
   ];
@@ -37,6 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
+            tabs[selectedIndex],
+            Align(alignment: Alignment.bottomCenter, child: const MiniPlayer()),
+          ],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           onTap: (index) {
@@ -82,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        body: tabs[selectedIndex],
       ),
     );
   }
@@ -93,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }) {
     return selectedIndex == index
         ? Container(
-          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
           decoration: BoxDecoration(
             color: AppColors.blackColorBg,
             borderRadius: BorderRadius.circular(20),

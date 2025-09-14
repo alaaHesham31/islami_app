@@ -22,6 +22,27 @@ class AppImage {
   static const String hadeathCardBackground = 'assets/images/hadeath_card_bg.png';
   static const String sebhaRotateBody = 'assets/images/sebha_rotate_body.png';
   static const String fixedPartOfSebha = 'assets/images/fixed_part_of_sebha.png';
+  static const String soundWaveImage = 'assets/images/sound_wave.png';
+  static const String mosqueImage = 'assets/images/mosque.png';
+  static const String sound = 'assets/images/sound.png';
+  static const String prayerTimesBg = 'assets/images/prayer_imes_bg.png';
+  static const String azkar1 = 'assets/images/azkar-1.png';
+  static const String azkar2 = 'assets/images/azkar-2.png';
+  static const String azkar3 = 'assets/images/azkar-3.png';
+  static const String azkar4 = 'assets/images/azkar-4.png';
+  static const String azkar5 = 'assets/images/azkar-5.png';
+  static const String azkar6 = 'assets/images/azkar-6.png';
+  static const String azkar7 = 'assets/images/azkar-7.png';
+  static const String azkar8 = 'assets/images/azkar-8.png';
+  static const String downloadIcon = 'assets/images/download-icon.png';
+
+
+
+
+
+
+
+
 
 
 

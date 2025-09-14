@@ -13,7 +13,7 @@ Future<void> initHive() async {
   Hive.registerAdapter(ReciterModelAdapter());
   Hive.registerAdapter(MoshafModelAdapter());
   Hive.registerAdapter(RadiosModelAdapter());
-    Hive.registerAdapter(DownloadedSurahAdapter());
+  Hive.registerAdapter(DownloadedSurahAdapter());
 
   final legacyReciters = await _extractLegacyRecitersIfAny();
   final legacyRadios = await _extractLegacyRadiosIfAny();
@@ -32,8 +32,7 @@ Future<void> initHive() async {
     }
   }
 
-    await Hive.openBox<DownloadedSurah>('downloadsBox');
-
+  await Hive.openBox<DownloadedSurah>('downloadsBox');
 }
 
 Future<List<ReciterModel>> _extractLegacyRecitersIfAny() async {
