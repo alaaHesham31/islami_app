@@ -1,4 +1,3 @@
-// lib/services/download/download_service.dart
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:islami_app_demo/services/download/download_progress_manager.dart';
@@ -18,7 +17,6 @@ class DownloadService {
     return '${folder.path}/surah_$surahId.mp3';
   }
 
-  /// Downloads surah; updates DownloadProgressManager; writes Hive metadata on success
   Future<void> downloadSurah({
     required int reciterId,
     required int surahId,
