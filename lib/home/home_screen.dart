@@ -5,8 +5,10 @@ import 'package:islami_app_demo/home/radio/radio_tab.dart';
 import 'package:islami_app_demo/home/radio/global_player/mini_player.dart';
 import 'package:islami_app_demo/home/sebha/sebha_tab.dart';
 import 'package:islami_app_demo/home/time/time_tab.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_image.dart';
+
+
+import '../utils/app_colors.dart';
+import '../utils/app_image.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'homeScreen';

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:islami_app_demo/home/radio/reciter_sub_tab/reciter_provider.dart';
 import 'package:islami_app_demo/home/radio/reciter_sub_tab/reciter_surah_list_screen.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_styles.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_styles.dart';
 
 class RecitersSubTab extends ConsumerWidget {
   const RecitersSubTab({super.key});

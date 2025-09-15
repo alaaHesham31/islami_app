@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hijri/hijri_calendar.dart';
+import 'package:intl/intl.dart';
 import 'package:islami_app_demo/home/time/azkar/azkar_list_section.dart';
 import 'package:islami_app_demo/home/time/prayer_times/prayer_repository.dart';
-import 'package:islami_app_demo/theme/app_image.dart';
-import 'package:islami_app_demo/theme/app_styles.dart';
 import '../../services/location_helper.dart';
-import '../../theme/app_colors.dart' show AppColors;
+import '../../utils/app_colors.dart';
+import '../../utils/app_image.dart';
+import '../../utils/app_styles.dart';
 
 class TimeTab extends StatefulWidget {
   const TimeTab({super.key});
@@ -19,10 +21,35 @@ class _TimeTabState extends State<TimeTab> {
   String? _nextPrayer;
   Duration? _timeRemaining;
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     _loadPrayerTimes();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_prayerTimes != null && _nextPrayer != null) {
+        final keys = _prayerTimes!.keys.toList();
+        final index = keys.indexOf(_nextPrayer!);
+        if (index != -1) {
+          _scrollController.animateTo(
+            index * 120.0,
+            duration: const Duration(milliseconds: 600),
+            curve: Curves.easeOut,
+          );
+        }
+      }
+    });
+  }
+
+  String _formatDuration(Duration d) {
+    final hours = d.inHours;
+    final minutes = d.inMinutes % 60;
+    if (hours > 0) {
+      return '${hours}h ${minutes}m';
+    } else {
+      return '${minutes}m';
+    }
   }
 
   Future<void> _loadPrayerTimes() async {
@@ -31,7 +58,6 @@ class _TimeTabState extends State<TimeTab> {
       final repo = PrayerRepository();
       final times = await repo.getPrayerTimes(pos.latitude, pos.longitude);
 
-      // Find next prayer
       final now = DateTime.now();
       String? next;
       Duration? remain;
@@ -55,8 +81,17 @@ class _TimeTabState extends State<TimeTab> {
     }
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
+    final gregorian = DateFormat('dd MMM, \nyyyy').format(DateTime.now());
+
+    final hijri = HijriCalendar.now().toFormat("dd MMM, \nyyyy");
     if (_prayerTimes == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -71,6 +106,7 @@ class _TimeTabState extends State<TimeTab> {
           child: Column(
             children: [
               Image.asset(AppImage.logoHeader),
+
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -94,17 +130,15 @@ class _TimeTabState extends State<TimeTab> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Text(gregorian, style: AppStyles.semi16White),
                                 Text(
-                                  '${DateTime.now().day} ${DateTime.now().month}\n${DateTime.now().year}',
-                                  style: AppStyles.semi16White,
-                                ),
-                                Text(
-                                  'Pray Time\nToday',
+                                  'Pray Time\n${DateFormat('EEEE').format(DateTime.now())}',
+                                  // Day name instead of "Today"
                                   style: AppStyles.semi20Brown,
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  '', // You can add Hijri date later
+                                  hijri,
                                   style: AppStyles.semi16White,
                                   textAlign: TextAlign.end,
                                 ),
@@ -121,13 +155,17 @@ class _TimeTabState extends State<TimeTab> {
                                   final time = _prayerTimes![name]!;
                                   final formatted =
                                       "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}";
-                                  return buildPrayTimeCard(name, formatted);
+                                  return Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: buildPrayTimeCard(name, formatted),
+                                  );
                                 },
-                                separatorBuilder: (_, __) => const SizedBox(width: 12),
+                                separatorBuilder:
+                                    (_, __) => const SizedBox(width: 12),
                                 itemCount: _prayerTimes!.length,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 12),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -141,15 +179,16 @@ class _TimeTabState extends State<TimeTab> {
                                     ),
                                     children: [
                                       TextSpan(
-                                        text: _nextPrayer != null
-                                            ? '- $_nextPrayer in ${_timeRemaining?.inMinutes ?? 0}m'
-                                            : ' - None',
+                                        text:
+                                            _nextPrayer != null
+                                                ? '- $_nextPrayer in ${_formatDuration(_timeRemaining!)}'
+                                                : ' - None',
                                         style: AppStyles.semi16Black,
                                       ),
                                     ],
                                   ),
                                 ),
-                                const FaIcon(FontAwesomeIcons.volumeXmark),
+                                // const FaIcon(FontAwesomeIcons.volumeXmark),
                               ],
                             ),
                           ],
@@ -169,29 +208,65 @@ class _TimeTabState extends State<TimeTab> {
   }
 
   Widget buildPrayTimeCard(String name, String time) {
-    return Container(
-      height: 120,
-      width: 100,
+    final isNext = name == _nextPrayer;
+
+    // Parse incoming "HH:mm" (24h) and reformat
+    final parsed = DateFormat("HH:mm").parse(time);
+    final formatted = DateFormat("hh:mm").format(parsed); // 12h
+    final amPm = DateFormat("a").format(parsed); // AM/PM
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      height: isNext ? 170 : 120,
+      width: isNext ? 120 : 90,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
         gradient: LinearGradient(
+          colors: [AppColors.blackColor, AppColors.brownColor],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [AppColors.blackColor, AppColors.brownColor],
         ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(name,
-              style: const TextStyle(
-                  fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700)),
-          Text(time,
-              style: const TextStyle(
-                  fontSize: 32, color: Colors.white, fontWeight: FontWeight.w700)),
-          Text("",
-              style: const TextStyle(
-                  fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700)),
+          Text(
+            name,
+            style: TextStyle(
+              fontSize: isNext ? 22 : 20,
+              color: Colors.white,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          Column(
+            children: [
+              Text(
+                formatted,
+                style: TextStyle(
+                  fontSize: isNext ? 32 : 28,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                amPm.toLowerCase(),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          if (isNext)
+            Text(
+              "Next Prayer",
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColors.whiteColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
         ],
       ),
     );

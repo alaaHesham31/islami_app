@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app_demo/model/sura_model.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_image.dart';
+
+import '../../utils/app_colors.dart';
+import '../../utils/app_image.dart';
+
 
 class SurasListWidget extends StatelessWidget {
   SurasListWidget({super.key, required this.surahModel, required this.index});

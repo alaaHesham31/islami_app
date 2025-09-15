@@ -1,35 +1,42 @@
-// lib/services/notification_service.dart
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart' show DateFormat;
+
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tzdata;
-import 'package:flutter/services.dart';
+
+import 'location_helper.dart';
+import '../home/time/prayer_times/prayer_repository.dart';
 
 class NotificationService {
-  static final FlutterLocalNotificationsPlugin _plugin = FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin _plugin =
+      FlutterLocalNotificationsPlugin();
 
+  static const String channelId = 'prayer_channel';
+  static const String channelName = 'Prayer Times';
+  static const String channelDescription = 'Prayer time notifications';
+
+  // -------------------- INIT --------------------
   static Future<void> init() async {
-    // load timezone db
     tzdata.initializeTimeZones();
 
-    // Attempt to set tz.local from DateTime.timeZoneName or offset fallback
     var set = false;
     try {
       final name = DateTime.now().timeZoneName;
       tz.setLocalLocation(tz.getLocation(name));
       set = true;
-      if (kDebugMode) debugPrint('🔁 tz set from name: $name');
     } catch (_) {
       if (kDebugMode) debugPrint('⚠️ tz.getLocation failed for timeZoneName');
     }
 
     if (!set) {
       final offsetHours = DateTime.now().timeZoneOffset.inHours;
-      final etcName = 'Etc/GMT${offsetHours >= 0 ? '-' : '+'}${offsetHours.abs()}';
+      final etcName =
+          'Etc/GMT${offsetHours >= 0 ? '-' : '+'}${offsetHours.abs()}';
       try {
         tz.setLocalLocation(tz.getLocation(etcName));
         set = true;
-        if (kDebugMode) debugPrint('🔁 tz set from offset: $etcName');
       } catch (_) {
         if (kDebugMode) debugPrint('⚠️ tz.getLocation failed for $etcName');
       }
@@ -37,52 +44,78 @@ class NotificationService {
 
     if (!set) {
       tz.setLocalLocation(tz.getLocation('UTC'));
-      if (kDebugMode) debugPrint('🔁 tz set fallback to UTC');
     }
 
-    // init plugin
-    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const ios = DarwinInitializationSettings();
-    final settings = InitializationSettings(android: android, iOS: ios);
-    await _plugin.initialize(settings, onDidReceiveNotificationResponse: (resp) {
-      if (kDebugMode) debugPrint('notification tapped: ${resp.payload}');
-    });
+    const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const iosInit = DarwinInitializationSettings();
+    final settings = InitializationSettings(android: androidInit, iOS: iosInit);
 
-    if (kDebugMode) debugPrint('NotificationService initialized (tz=${tz.local.name})');
+    await _plugin.initialize(
+      settings,
+      onDidReceiveNotificationResponse: (resp) {
+        if (kDebugMode) debugPrint('Tapped: ${resp.payload}');
+      },
+    );
+
+    // Android channel
+    final androidPlugin =
+        _plugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >();
+    if (androidPlugin != null) {
+      final channel = AndroidNotificationChannel(
+        channelId,
+        channelName,
+        description: channelDescription,
+        importance: Importance.max,
+        playSound: true,
+        sound: RawResourceAndroidNotificationSound('notification'),
+      );
+      await androidPlugin.createNotificationChannel(channel);
+    }
   }
 
+  // -------------------- PERMISSIONS --------------------
+  static Future<void> requestPermission() async {
+    final androidPlugin =
+        _plugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >();
+    await androidPlugin?.requestNotificationsPermission();
+
+    final iosPlugin =
+        _plugin
+            .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin
+            >();
+    await iosPlugin?.requestPermissions(alert: true, badge: true, sound: true);
+  }
+
+  // -------------------- CORE --------------------
   static Future<void> cancelAll() => _plugin.cancelAll();
 
-  /// Schedule a zoned notification for a local DateTime.
-  /// Uses inexact scheduling by default to avoid exact alarm permission issues.
   static Future<void> scheduleZoned({
     required int id,
     required String title,
     required String body,
     required DateTime localDateTime,
-    String? payload,
     bool dailyRepeat = false,
+    String? payload,
   }) async {
     try {
       final scheduled = tz.TZDateTime.from(localDateTime, tz.local);
-
       final androidDetails = AndroidNotificationDetails(
-        'prayer_channel',
-        'Prayer Times',
-        channelDescription: 'Prayer time notifications',
+        channelId,
+        channelName,
+        channelDescription: channelDescription,
         importance: Importance.max,
         priority: Priority.high,
+        playSound: true,
       );
       final platform = NotificationDetails(android: androidDetails);
 
-      // Skip scheduling if in the past (caller should have checked but double-safe here)
-      final now = tz.TZDateTime.now(tz.local);
-      if (!scheduled.isAfter(now)) {
-        if (kDebugMode) debugPrint('⏭ scheduleZoned: scheduled time is NOT after now ($scheduled <= $now), skipping');
-        throw Exception('scheduled time is not after now');
-      }
-
-      // Try inexact scheduling first (this avoids requiring exact alarm permission)
       await _plugin.zonedSchedule(
         id,
         title,
@@ -91,48 +124,54 @@ class NotificationService {
         platform,
         androidAllowWhileIdle: true,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: dailyRepeat ? DateTimeComponents.time : null,
         payload: payload,
       );
-
-      if (kDebugMode) debugPrint('⏰ Scheduled id=$id at $localDateTime (tz=${tz.local.name})');
-      return;
-    } on PlatformException catch (pErr) {
-      // Exact alarms not permitted on some devices: fallback to scheduling without androidScheduleMode
-      if (kDebugMode) debugPrint('⚠️ PlatformException scheduling: $pErr — falling back to simpler scheduling');
-
-      try {
-        final scheduled = tz.TZDateTime.from(localDateTime, tz.local);
-        final androidDetails = AndroidNotificationDetails('prayer_channel', 'Prayer Times',
-            channelDescription: 'Prayer time notifications');
-        final platform = NotificationDetails(android: androidDetails);
-
-        await _plugin.zonedSchedule(
-          id,
-          title,
-          body,
-          scheduled,
-          platform,
-          androidAllowWhileIdle: true,
-          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-          matchDateTimeComponents: dailyRepeat ? DateTimeComponents.time : null,
-          payload: payload,
-        );
-
-        if (kDebugMode) debugPrint('⏰ Fallback scheduled id=$id at $localDateTime');
-        return;
-      } catch (e) {
-        debugPrint('❌ Fallback schedule failed: $e');
-      }
+    } on PlatformException catch (err) {
+      debugPrint('⚠️ PlatformException scheduling: $err');
     } catch (e) {
-      debugPrint('❌ Unknown error scheduling notification: $e');
+      debugPrint('❌ Error scheduling: $e');
     }
   }
 
-  static Future<void> debugPending() async {
-    final pending = await _plugin.pendingNotificationRequests();
-    if (kDebugMode) debugPrint('Pending notifications count=${pending.length}');
-    for (final p in pending) debugPrint('PENDING: id=${p.id}, title=${p.title}, body=${p.body}');
+  // -------------------- PRAYER SCHEDULING --------------------
+  static Future<void> schedulePrayerNotifications() async {
+    try {
+      final loc = await LocationService.getCurrentLocation();
+      final repo = PrayerRepository();
+      final times = await repo.getPrayerTimes(
+        loc.latitude,
+        loc.longitude,
+        forceRefresh: false,
+      );
+
+      await cancelAll(); // clear old
+
+      final now = DateTime.now();
+      for (final e in times.entries) {
+        var scheduled = e.value.subtract(const Duration(minutes: 10));
+        if (!scheduled.isAfter(now)) {
+          scheduled = scheduled.add(const Duration(days: 1));
+        }
+
+        await scheduleZoned(
+          id: e.key.hashCode,
+          title: '${e.key} Prayer',
+          body: 'Prayer time for ${e.key} is coming in 10 minutes',
+          localDateTime: scheduled,
+          dailyRepeat: true,
+        );
+
+        // 🔹 Debug log in 12h format
+        final formatted = DateFormat('hh:mm a').format(scheduled);
+        debugPrint(
+          '📅 Scheduled ${e.key} at $formatted (id=${e.key.hashCode})',
+        );
+      }
+    } catch (e) {
+      debugPrint('❌ Failed scheduling prayers: $e');
+    }
   }
 }

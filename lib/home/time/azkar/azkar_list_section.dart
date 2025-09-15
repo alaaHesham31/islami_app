@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:islami_app_demo/home/time/azkar/azkar_provider.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_image.dart';
-import 'package:islami_app_demo/theme/app_styles.dart';
 
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_image.dart';
+import '../../../utils/app_styles.dart';
 import 'azkar_details_screen.dart';
 
 class AzkarListSection extends ConsumerWidget {

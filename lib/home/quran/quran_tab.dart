@@ -5,9 +5,11 @@ import 'package:islami_app_demo/home/quran/most_recently_widget.dart';
 import 'package:islami_app_demo/home/quran/sura_details_screen.dart';
 import 'package:islami_app_demo/home/quran/suras_list_widget.dart';
 import 'package:islami_app_demo/model/sura_model.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_image.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../utils/app_colors.dart';
+import '../../utils/app_image.dart';
 
 class QuranTab extends StatefulWidget {
   QuranTab({super.key});
