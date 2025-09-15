@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app_demo/home/radio/radio_sub_tab/radio_sub_tab.dart';
 import 'package:islami_app_demo/home/radio/reciter_sub_tab/reciters_sub_tab.dart';
-import 'package:islami_app_demo/theme/app_colors.dart' show AppColors;
-import 'package:islami_app_demo/theme/app_image.dart';
+
+import '../../utils/app_colors.dart';
+import '../../utils/app_image.dart';
+
 
 class RadioTab extends StatefulWidget {
   RadioTab({super.key});

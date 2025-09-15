@@ -4,8 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:islami_app_demo/home/radio/global_player/global_play_states.dart'
     show PlayerSourceType, PlayerStatus;
 import 'package:islami_app_demo/home/radio/global_player/global_player_notifier.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_styles.dart';
+
+
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_styles.dart';
 
 class MiniPlayer extends ConsumerWidget {
   const MiniPlayer({super.key});

@@ -1,4 +1,3 @@
-// lib/services/pray_times/prayer_cache.dart
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
@@ -48,5 +47,11 @@ class PrayerCache {
     final box = await _openBox();
     await box.put(keyLastUpdateMonth, monthKey);
     if (kDebugMode) debugPrint('💾 PrayerCache: set last_update_month=$monthKey');
+  }
+
+  Future<Map<String, DateTime>?> getFinalTimesForMonth(String monthKey) async {
+    final last = await getLastUpdateMonth();
+    if (last != monthKey) return null;
+    return await getCachedFinalTimes();
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,10 +13,10 @@ import 'package:islami_app_demo/services/download/download_service%20.dart'
     show DownloadService;
 import 'package:islami_app_demo/services/hive_helper/hive_helpers.dart'
     show getDownloadsBox;
-import 'package:islami_app_demo/theme/app_colors.dart' show AppColors;
-import 'package:islami_app_demo/theme/app_image.dart';
-import 'package:islami_app_demo/theme/app_styles.dart';
 import 'package:islami_app_demo/model/ReciterModel.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_image.dart';
+import '../../../utils/app_styles.dart';
 
 class ReciterSurahListScreen extends ConsumerWidget {
   static const String routeName = 'reciter-surah-list_screen';
@@ -151,7 +150,7 @@ class ReciterSurahListScreen extends ConsumerWidget {
             downloadsBox != null && downloadsBox.containsKey(key);
 
         if (downloaded) {
-          return const Icon(Icons.check_circle, color: AppColors.blackColor, size: 22);
+          return Icon(Icons.check_circle, color: AppColors.blackColor, size: 22);
         }
 
         return IconButton(
@@ -220,12 +219,12 @@ class ReciterSurahListScreen extends ConsumerWidget {
       },
       icon:
           isThisPlaying
-              ? const FaIcon(
+              ? FaIcon(
                 FontAwesomeIcons.pause,
                 color: AppColors.blackColor,
                 size: 20,
               )
-              : const FaIcon(
+              : FaIcon(
                 FontAwesomeIcons.play,
                 color: AppColors.blackColor,
                 size: 20,

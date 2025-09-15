@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_image.dart';
+
+import '../../utils/app_colors.dart';
+import '../../utils/app_image.dart';
+
 
 
 class MostRecentlyWidget extends StatelessWidget {

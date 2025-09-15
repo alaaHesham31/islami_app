@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islami_app_demo/home/hadeath/hadeath_details_screen.dart';
 import 'package:islami_app_demo/model/hadeath_model.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_image.dart';
+
+import '../../utils/app_colors.dart';
+import '../../utils/app_image.dart';
+
 
 class HadeathCard extends StatelessWidget {
    HadeathCard({super.key, required this.hadeathList});

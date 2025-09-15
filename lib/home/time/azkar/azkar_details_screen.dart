@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app_demo/model/AzkarModel.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_styles.dart';
+
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_styles.dart';
 
 class AzkarDetailsScreen extends StatelessWidget {
   static const String routeName = 'azkar-details';

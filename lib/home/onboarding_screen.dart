@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:islami_app_demo/home/home_screen.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_image.dart';
+
+import '../utils/app_colors.dart';
+import '../utils/app_image.dart';
+
 
 class OnboardingScreen extends StatelessWidget {
   static const String routeName = 'onboardingScreen';

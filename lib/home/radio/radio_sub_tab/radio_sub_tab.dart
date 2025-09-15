@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:islami_app_demo/home/radio/global_player/global_play_states.dart';
 import 'package:islami_app_demo/home/radio/global_player/global_player_notifier.dart';
 import 'package:islami_app_demo/home/radio/radio_sub_tab/radio_provider.dart';
-import 'package:islami_app_demo/theme/app_colors.dart';
-import 'package:islami_app_demo/theme/app_image.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_image.dart';
 
 class RadioSubTabContent extends ConsumerWidget {
   const RadioSubTabContent({super.key});
