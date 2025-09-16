@@ -2,8 +2,9 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:islami_app_demo/home/radio/global_player/global_play_states.dart';
 import 'package:just_audio/just_audio.dart';
+
+import 'global_play_states.dart';
 
 class GlobalPlayerNotifier extends StateNotifier<GlobalPlayerState> {
   GlobalPlayerNotifier() : super(const GlobalPlayerState()) {

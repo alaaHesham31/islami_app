@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:islami_app_demo/home/radio/global_player/mini_player.dart';
+import 'package:islami_app_demo/features/global_player/mini_player.dart';
 import 'package:islami_app_demo/home/time/time_tab.dart';
 import '../features/hadeath/presentation/pages/hadeath_tab.dart';
 import '../features/quran/presentation/screens/quran_tab.dart';

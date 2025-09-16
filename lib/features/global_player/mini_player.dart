@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:islami_app_demo/home/radio/global_player/global_play_states.dart'
-    show PlayerSourceType, PlayerStatus;
-import 'package:islami_app_demo/home/radio/global_player/global_player_notifier.dart';
 
 
-import '../../../utils/app_colors.dart';
-import '../../../utils/app_styles.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_styles.dart';
+import 'global_play_states.dart';
+import 'global_player_notifier.dart';
 
 class MiniPlayer extends ConsumerWidget {
   const MiniPlayer({super.key});
@@ -21,8 +20,8 @@ class MiniPlayer extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    final duration = playerState.duration ?? Duration.zero;
-    final position = playerState.position ?? Duration.zero;
+    final duration = playerState.duration ;
+    final position = playerState.position ;
     final durationSeconds = duration.inSeconds.toDouble().clamp(
       0.0,
       double.infinity,
