@@ -6,15 +6,15 @@ enum PlayerStatus { idle, loading, playing, paused, stopped }
 @immutable
 class GlobalPlayerState {
   final PlayerSourceType? sourceType;
-  final String? title;     
-  final String? subtitle; 
+  final String? title;
+  final String? subtitle;
   final String? url;
   final PlayerStatus status;
   final Duration duration;
   final Duration position;
   final bool isMuted;
   final String? errorMessage;
-  final bool isLocal; 
+  final bool isLocal;
 
 
   const GlobalPlayerState({
@@ -51,7 +51,7 @@ class GlobalPlayerState {
       duration: duration ?? this.duration,
       position: position ?? this.position,
       isMuted: isMuted ?? this.isMuted,
-       errorMessage: errorMessage ?? this.errorMessage, 
+       errorMessage: errorMessage ?? this.errorMessage,
        isLocal: isLocal ?? this.isLocal
     );
   }

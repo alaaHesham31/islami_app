@@ -1,37 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:islami_app_demo/home/hadeath/hadeath_tab.dart';
-import 'package:islami_app_demo/home/quran/quran_tab.dart';
-import 'package:islami_app_demo/home/radio/radio_tab.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami_app_demo/home/radio/global_player/mini_player.dart';
-import 'package:islami_app_demo/home/sebha/sebha_tab.dart';
 import 'package:islami_app_demo/home/time/time_tab.dart';
-
-
+import '../features/hadeath/presentation/pages/hadeath_tab.dart';
+import '../features/quran/presentation/screens/quran_tab.dart';
+import '../features/radio/presentation/radio_tab.dart';
+import '../features/sebha/presentation/sebha_tab.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_image.dart';
+import 'providers/home_provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerWidget {
   static const String routeName = 'homeScreen';
 
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedIndex = ref.watch(homeTabProvider);
 
-class _HomeScreenState extends State<HomeScreen> {
-  int selectedIndex = 4;
+    final tabs = [
+       QuranTab(),
+       HadeathTab(),
+      const SebhaTab(),
+       RadioTab(),
+      const TimeTab(),
+    ];
 
-  final List<Widget> tabs = [
-    QuranTab(),
-    HadeathTab(),
-    const SebhaTab(),
-    RadioTab(),
-    TimeTab(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -44,48 +40,54 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Stack(
           children: [
             tabs[selectedIndex],
-            Align(alignment: Alignment.bottomCenter, child: const MiniPlayer()),
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: MiniPlayer(),
+            ),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           onTap: (index) {
-            setState(() {
-              selectedIndex = index;
-            });
+            ref.read(homeTabProvider.notifier).state = index;
           },
           items: [
             BottomNavigationBarItem(
-              label: 'Quran',
+              label: 'القرآن',
               icon: buildHoverOnSelectedTab(
+                selectedIndex: selectedIndex,
                 index: 0,
                 tabIconPath: AppImage.quranIcon,
               ),
             ),
             BottomNavigationBarItem(
-              label: 'Hadeath',
+              label: 'الحديث',
               icon: buildHoverOnSelectedTab(
+                selectedIndex: selectedIndex,
                 index: 1,
                 tabIconPath: AppImage.hadeathIcon,
               ),
             ),
             BottomNavigationBarItem(
-              label: 'Sebha',
+              label: 'السبحة',
               icon: buildHoverOnSelectedTab(
+                selectedIndex: selectedIndex,
                 index: 2,
                 tabIconPath: AppImage.sebhaIcon,
               ),
             ),
             BottomNavigationBarItem(
-              label: 'Radio',
+              label: 'الراديو',
               icon: buildHoverOnSelectedTab(
+                selectedIndex: selectedIndex,
                 index: 3,
                 tabIconPath: AppImage.radioIcon,
               ),
             ),
             BottomNavigationBarItem(
-              label: 'Time',
+              label: 'المواقيت',
               icon: buildHoverOnSelectedTab(
+                selectedIndex: selectedIndex,
                 index: 4,
                 tabIconPath: AppImage.timeIcon,
               ),
@@ -97,18 +99,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildHoverOnSelectedTab({
+    required int selectedIndex,
     required int index,
     required String tabIconPath,
   }) {
     return selectedIndex == index
         ? Container(
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
-          decoration: BoxDecoration(
-            color: AppColors.blackColorBg,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: ImageIcon(AssetImage(tabIconPath)),
-        )
+      padding:  EdgeInsets.symmetric(vertical: 6.h, horizontal: 20.w),
+      // margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+      decoration: BoxDecoration(
+        color: AppColors.blackColorBg,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: ImageIcon(AssetImage(tabIconPath)),
+    )
         : ImageIcon(AssetImage(tabIconPath));
   }
 }
