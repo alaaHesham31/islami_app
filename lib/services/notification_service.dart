@@ -123,12 +123,12 @@ class NotificationService {
         scheduled,
         platform,
         androidAllowWhileIdle: true,
-        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: dailyRepeat ? DateTimeComponents.time : null,
+        UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: null, // 🔹 no repeat
         payload: payload,
       );
+
     } on PlatformException catch (err) {
       debugPrint('⚠️ PlatformException scheduling: $err');
     } catch (e) {
@@ -174,4 +174,17 @@ class NotificationService {
       debugPrint('❌ Failed scheduling prayers: $e');
     }
   }
+  static Future<void> scheduleDailyRefresh() async {
+    final tomorrow = DateTime.now().add(const Duration(days: 1));
+    final midnight = DateTime(tomorrow.year, tomorrow.month, tomorrow.day);
+
+    await scheduleZoned(
+      id: 9999, // reserved ID
+      title: 'Reschedule',
+      body: 'Rescheduling prayer times',
+      localDateTime: midnight,
+      payload: 'refresh',
+    );
+  }
+
 }

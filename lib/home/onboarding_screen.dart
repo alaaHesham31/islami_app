@@ -1,96 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:islami_app_demo/home/home_screen.dart';
 
 import '../utils/app_colors.dart';
 import '../utils/app_image.dart';
-
+import '../utils/app_styles.dart';
 
 class OnboardingScreen extends StatelessWidget {
   static const String routeName = 'onboardingScreen';
 
   OnboardingScreen({super.key});
 
-  List<PageViewModel> listPagesViewModel = [
+  final List<PageViewModel> listPagesViewModel = [
     PageViewModel(
-      title: 'Welcome To Islmi App',
+      title: 'مرحباً بك في تطبيق إسلامي',
       body: '',
-      image: Image.asset(AppImage.onboarding1, fit: BoxFit.contain, ),
+      image: Image.asset(AppImage.onboarding1, fit: BoxFit.contain),
       decoration: PageDecoration(
-        titleTextStyle: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
+        titleTextStyle: AppStyles.bold22Primary,
       ),
     ),
     PageViewModel(
-      title: 'Welcome To Islmi App',
-      body: 'We Are Very Excited To Have You In Our Community',
+      title: 'مرحباً بك في تطبيق إسلامي',
+      body: 'نحن سعداء بانضمامك إلى مجتمعنا',
       image: SizedBox.expand(child: Image.asset(AppImage.onboarding2)),
       decoration: PageDecoration(
-        titleTextStyle: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
-        bodyTextStyle: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
+        titleTextStyle: AppStyles.bold22Primary,
+        bodyTextStyle: AppStyles.bold16Primary,
       ),
     ),
     PageViewModel(
-      title: 'Reading the Quran',
-      body: 'Read, and your Lord is the Most Generous',
+      title: 'قراءة القرآن الكريم',
+      body: 'اقرأ وربك الأكرم',
       image: Center(child: Image.asset(AppImage.onboarding3)),
       decoration: PageDecoration(
-        titleTextStyle: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
-        bodyTextStyle: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
+        titleTextStyle: AppStyles.bold22Primary,
+        bodyTextStyle: AppStyles.bold16Primary,
       ),
     ),
     PageViewModel(
-      title: 'Bearish',
-      body: 'Praise the name of your Lord, the Most High',
+      title: 'التسبيح',
+      body: 'سبح اسم ربك الأعلى',
       image: Center(child: Image.asset(AppImage.onboarding4)),
       decoration: PageDecoration(
-        titleTextStyle: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
-        bodyTextStyle: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
+        titleTextStyle: AppStyles.bold22Primary,
+        bodyTextStyle: AppStyles.bold16Primary,
       ),
     ),
     PageViewModel(
-      title: 'Holy Quran Radio',
-      body:
-          'You can listen to the Holy Quran Radio through the application for free and easily',
+      title: 'إذاعة القرآن الكريم',
+      body: 'يمكنك الاستماع إلى إذاعة القرآن الكريم بسهولة ومجاناً عبر التطبيق',
       image: Center(child: Image.asset(AppImage.onboarding5)),
       decoration: PageDecoration(
-        titleTextStyle: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
-        bodyTextStyle: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
+        titleTextStyle: AppStyles.bold22Primary,
+        bodyTextStyle: AppStyles.bold16Primary,
       ),
     ),
   ];
@@ -101,36 +65,35 @@ class OnboardingScreen extends StatelessWidget {
       decoration: BoxDecoration(color: AppColors.blackColor),
       child: Column(
         children: [
-          Image.asset(AppImage.logoHeader, height: 200, width: 200,),
+          Image.asset(AppImage.logoHeader, height: 200.h, width: 200.w),
           Expanded(
             child: IntroductionScreen(
               pages: listPagesViewModel,
               showBackButton: true,
               showNextButton: true,
-              next: const Text(
-                "Next",
-                style: TextStyle(color: AppColors.primaryColor),
+              next: Text(
+                "التالي",
+                style: AppStyles.bold16Primary,
               ),
-              back: const Text(
-                "Back",
-                style: TextStyle(color: AppColors.primaryColor),
+              back: Text(
+                "السابق",
+                style: AppStyles.bold16Primary,
               ),
-              done: const Text(
-                "Finish",
-                style: TextStyle(color: AppColors.primaryColor),
+              done: Text(
+                "إنهاء",
+                style: AppStyles.bold16Primary,
               ),
               onDone: () {
                 Navigator.pushNamed(context, HomeScreen.routeName);
               },
               dotsDecorator: DotsDecorator(
-                size: const Size.square(10.0),
-                activeSize: const Size(20.0, 10.0),
+                size:  Size.square(10.w),
+                activeSize:  Size(20.h, 10.w),
                 activeColor: AppColors.primaryColor,
-
                 color: AppColors.grayColor,
-                spacing: const EdgeInsets.symmetric(horizontal: 3.0),
+                spacing:  EdgeInsets.symmetric(horizontal: 3.w),
                 activeShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0),
+                  borderRadius: BorderRadius.circular(25.r),
                 ),
               ),
             ),

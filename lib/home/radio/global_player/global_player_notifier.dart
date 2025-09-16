@@ -13,7 +13,7 @@ class GlobalPlayerNotifier extends StateNotifier<GlobalPlayerState> {
     });
 
     _positionSub = _player.positionStream
-        .map((p) => Duration(seconds: p.inSeconds)) 
+        .map((p) => Duration(seconds: p.inSeconds))
         .distinct()
         .listen((p) {
           if (state.status != PlayerStatus.idle &&
@@ -162,7 +162,7 @@ Future<void> _playReciterInternal(
     final newMuted = !state.isMuted;
     if (newMuted) {
       try {
-        _lastVolume = await _player.volume; 
+        _lastVolume = await _player.volume;
       } catch (_) {
         _lastVolume = 1.0;
       }
