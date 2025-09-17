@@ -21,10 +21,10 @@ class HomeScreen extends ConsumerWidget {
     final selectedIndex = ref.watch(homeTabProvider);
 
     final tabs = [
-       QuranTab(),
-       HadeathTab(),
+      QuranTab(),
+      HadeathTab(),
       const SebhaTab(),
-       RadioTab(),
+      RadioTab(),
       const TimeTab(),
     ];
 
@@ -39,11 +39,8 @@ class HomeScreen extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            tabs[selectedIndex],
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: MiniPlayer(),
-            ),
+            IndexedStack(index: selectedIndex, children: tabs),
+            const Align(alignment: Alignment.bottomCenter, child: MiniPlayer()),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -105,14 +102,14 @@ class HomeScreen extends ConsumerWidget {
   }) {
     return selectedIndex == index
         ? Container(
-      padding:  EdgeInsets.symmetric(vertical: 6.h, horizontal: 20.w),
-      // margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
-      decoration: BoxDecoration(
-        color: AppColors.blackColorBg,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: ImageIcon(AssetImage(tabIconPath)),
-    )
+          padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 20.w),
+          // margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+          decoration: BoxDecoration(
+            color: AppColors.blackColorBg,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: ImageIcon(AssetImage(tabIconPath)),
+        )
         : ImageIcon(AssetImage(tabIconPath));
   }
 }

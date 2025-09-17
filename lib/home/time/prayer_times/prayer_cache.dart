@@ -1,28 +1,59 @@
 import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class PrayerCache {
   static const String boxName = 'prayer_cache';
-  static const String keyFinalTimes = 'final_times'; // Map<String,int(ms)>
+  static const String keyFinalTimes = 'final_times_by_date'; // Map<YYYY-MM-DD, Map<Prayer,int(ms)>>
   static const String keyOffsets = 'offsets'; // Map<String,int(minutes)>
   static const String keyLastUpdateMonth = 'last_update_month'; // 'YYYY-MM'
 
   Future<Box> _openBox() async => await Hive.openBox(boxName);
 
-  Future<Map<String, DateTime>?> getCachedFinalTimes() async {
+  Future<Map<String, Map<String, DateTime>>?> getCachedFinalTimesForMonth(String monthKey) async {
     final box = await _openBox();
     final raw = box.get(keyFinalTimes);
     if (raw == null) return null;
-    // raw is Map<String,int>
-    return Map<String, int>.from(raw).map((k, v) => MapEntry(k, DateTime.fromMillisecondsSinceEpoch(v, isUtc: true).toLocal()));
+    // raw: Map<String, Map<String,int>>
+    final Map<String, dynamic> out = Map<String, dynamic>.from(raw);
+    final Map<String, Map<String, DateTime>> result = {};
+    out.forEach((dateStr, innerRaw) {
+      final inner = Map<String, dynamic>.from(innerRaw);
+      final Map<String, DateTime> innerMap = {};
+      inner.forEach((k, v) {
+        innerMap[k] = DateTime.fromMillisecondsSinceEpoch(v as int);
+      });
+      result[dateStr] = innerMap;
+    });
+    return result;
   }
 
-  Future<void> saveFinalTimes(Map<String, DateTime> times) async {
+  Future<Map<String, DateTime>?> getFinalTimesForDateKey(String dateKey) async {
     final box = await _openBox();
-    final out = <String, int>{};
-    times.forEach((k, v) => out[k] = v.toUtc().millisecondsSinceEpoch);
-    await box.put(keyFinalTimes, out);
-    if (kDebugMode) debugPrint('💾 PrayerCache: saved finalTimes keys=${out.keys}');
+    final raw = box.get(keyFinalTimes);
+    if (raw == null) return null;
+    final Map<String, dynamic> outer = Map<String, dynamic>.from(raw);
+    if (!outer.containsKey(dateKey)) return null;
+    final inner = Map<String, dynamic>.from(outer[dateKey]);
+    final Map<String, DateTime> innerMap = {};
+    inner.forEach((k, v) {
+      innerMap[k] = DateTime.fromMillisecondsSinceEpoch(v as int);
+    });
+    return innerMap;
+  }
+
+  /// Save final times for multiple dates (e.g., whole month) or single day.
+  /// `data` shape: { '2025-09-18': {'Fajr': ms, 'Dhuhr': ms, ...}, ... }
+  Future<void> saveFinalTimesForDates(Map<String, Map<String, DateTime>> data) async {
+    final box = await _openBox();
+    final raw = box.get(keyFinalTimes) as Map<String, dynamic>? ?? {};
+    final merged = Map<String, dynamic>.from(raw);
+    data.forEach((dateKey, inner) {
+      final outInner = <String, int>{};
+      inner.forEach((k, v) => outInner[k] = v.toUtc().millisecondsSinceEpoch);
+      merged[dateKey] = outInner;
+    });
+    await box.put(keyFinalTimes, merged);
+    if (kDebugMode) debugPrint('💾 PrayerCache: saved finalTimes for dates=${data.keys.toList()}');
   }
 
   Future<Map<String, int>> getOffsets() async {
@@ -47,11 +78,5 @@ class PrayerCache {
     final box = await _openBox();
     await box.put(keyLastUpdateMonth, monthKey);
     if (kDebugMode) debugPrint('💾 PrayerCache: set last_update_month=$monthKey');
-  }
-
-  Future<Map<String, DateTime>?> getFinalTimesForMonth(String monthKey) async {
-    final last = await getLastUpdateMonth();
-    if (last != monthKey) return null;
-    return await getCachedFinalTimes();
   }
 }

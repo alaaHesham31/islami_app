@@ -15,7 +15,11 @@ class TimeTab extends StatefulWidget {
   State<TimeTab> createState() => _TimeTabState();
 }
 
-class _TimeTabState extends State<TimeTab> {
+class _TimeTabState extends State<TimeTab>  with AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
+
   Map<String, DateTime>? _prayerTimes;
   String? _nextPrayer;
   Duration? _timeRemaining;
@@ -88,6 +92,7 @@ class _TimeTabState extends State<TimeTab> {
   }
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final gregorian = DateFormat('dd MMM, \nyyyy').format(DateTime.now());
 
     final hijri = HijriCalendar.now().toFormat("dd MMM, \nyyyy");

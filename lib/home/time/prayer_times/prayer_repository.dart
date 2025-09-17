@@ -1,7 +1,5 @@
-// lib/services/pray_times/prayer_repository.dart
 import 'package:adhan/adhan.dart';
 import 'package:flutter/foundation.dart';
-
 import 'prayer_api_service.dart';
 import 'prayer_cache.dart';
 
@@ -12,30 +10,28 @@ class PrayerRepository {
   Future<Map<String, DateTime>> getPrayerTimes(
       double lat,
       double lng, {
+        DateTime? date,
         bool forceRefresh = false,
       }) async {
-    final now = DateTime.now();
-    final monthKey = '${now.year}-${now.month.toString().padLeft(2, '0')}';
+    final target = date ?? DateTime.now();
+    final dateKey = '${target.year}-${target.month.toString().padLeft(2, '0')}-${target.day.toString().padLeft(2, '0')}';
+    final monthKey = '${target.year}-${target.month.toString().padLeft(2, '0')}';
 
-    // 1) Cached fast path
-    final lastUpdateMonth = await _cache.getLastUpdateMonth();
-    final cachedFinalTimes = await _cache.getFinalTimesForMonth(monthKey);
-
-    if (!forceRefresh && lastUpdateMonth == monthKey && cachedFinalTimes != null) {
-      if (kDebugMode) {
-        debugPrint(
-          '✅ PrayerRepository: Loaded cached finalTimes for $monthKey → $cachedFinalTimes',
-        );
+    // 1) Cached fast path (per-date)
+    if (!forceRefresh) {
+      final perDay = await _cache.getFinalTimesForDateKey(dateKey);
+      if (perDay != null) {
+        if (kDebugMode) debugPrint('✅ PrayerRepository: Loaded cached finalTimes for $dateKey → $perDay');
+        return perDay;
       }
-      return cachedFinalTimes;
     }
 
     if (kDebugMode) {
-      debugPrint('🔁 PrayerRepository: Cache miss (last=$lastUpdateMonth, now=$monthKey), computing…');
+      debugPrint('🔁 PrayerRepository: cache miss for $dateKey (month=$monthKey), computing…');
     }
 
-    // 2) Compute local times (Adhan)
-    final components = DateComponents.from(now);
+    // 2) Compute local times (Adhan) for the target date
+    final components = DateComponents.from(target);
     final coords = Coordinates(lat, lng);
     final params = CalculationMethod.muslim_world_league.getParameters();
     params.madhab = Madhab.shafi;
@@ -48,15 +44,15 @@ class PrayerRepository {
       'Maghrib': pt.maghrib,
       'Isha': pt.isha,
     };
-    if (kDebugMode) debugPrint('🧭 Local prayer times: $localTimes');
+    if (kDebugMode) debugPrint('🧭 Local prayer times for $dateKey: $localTimes');
 
-    // 3) Try API fetch
+    // 3) Try API fetch for that date
     Map<String, DateTime>? apiTimes;
     try {
-      apiTimes = await _api.fetchPrayerTimes(lat, lng, now);
-      if (kDebugMode) debugPrint('🌐 API prayer times: $apiTimes');
+      apiTimes = await _api.fetchPrayerTimes(lat, lng, target);
+      if (kDebugMode) debugPrint('🌐 API prayer times for $dateKey: $apiTimes');
     } catch (e) {
-      if (kDebugMode) debugPrint('⚠️ API fetch failed: $e');
+      if (kDebugMode) debugPrint('⚠️ API fetch failed for $dateKey: $e');
     }
 
     // 4) Load cached offsets (if any)
@@ -87,16 +83,18 @@ class PrayerRepository {
       }
     }
 
-    // 6) Save results
+    // 6) Save results per-date
+    await _cache.saveFinalTimesForDates({dateKey: result});
+
+    // 7) Save offsets (merge)
     if (newOffsets.isNotEmpty) {
       final merged = Map<String, int>.from(cachedOffsets)..addAll(newOffsets);
       await _cache.saveOffsets(merged);
     }
-    await _cache.saveFinalTimes(result);
     await _cache.setLastUpdateMonth(monthKey);
 
     if (kDebugMode) {
-      debugPrint('💾 Saved finalTimes & offsets for $monthKey');
+      debugPrint('💾 Saved finalTimes for $dateKey & offsets if any');
     }
 
     return result;
