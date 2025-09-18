@@ -57,6 +57,20 @@ class AppStyles {
   static TextStyle bold20Primary = GoogleFonts.rubik(
     fontSize: 20.sp, color: AppColors.primaryColor, fontWeight: FontWeight.w700,);
 
+  static TextStyle bold22White = GoogleFonts.rubik(
+      fontSize: 22.sp, color: AppColors.whiteColor, fontWeight: FontWeight.w900);
+
+  static TextStyle bold32White = GoogleFonts.rubik(
+      fontSize: 32.sp, color: AppColors.whiteColor, fontWeight: FontWeight.w700);
+  static TextStyle bold28White = GoogleFonts.rubik(
+      fontSize: 28.sp, color: AppColors.whiteColor, fontWeight: FontWeight.w700);
+  static TextStyle small14White70 = GoogleFonts.rubik(
+      fontSize: 14.sp, color: Colors.white70, fontWeight: FontWeight.w500);
+  static TextStyle bold14White = GoogleFonts.rubik(
+      fontSize: 14.sp, color: AppColors.whiteColor, fontWeight: FontWeight.bold);
+
+  static TextStyle semi16Brown = GoogleFonts.rubik(
+      fontSize: 16.sp, color: AppColors.brownColor, fontWeight: FontWeight.w500);
 
 
 

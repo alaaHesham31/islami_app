@@ -4,15 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:workmanager/workmanager.dart';
-
-import 'home/home_screen.dart';
-import 'home/onboarding_screen.dart';
-import 'home/time/azkar/azkar_details_screen.dart';
+import 'features/home/home_screen.dart';
+import 'features/time/azkar/azkar_details_screen.dart';
+import 'features/home/onboarding_screen.dart';
 import 'features/hadeath/presentation/pages/hadeath_details_screen.dart';
 import 'features/quran/presentation/widgets/surah_details_screen.dart';
 
-import 'services/notification_service.dart';
-import 'shared/hive_initializer.dart';
+import 'services/notifications_services/notification_service.dart';
+import 'services/hive/hive_initializer.dart';
 import 'utils/app_theme.dart';
 
 Future<void> main() async {
@@ -42,7 +41,7 @@ Future<void> main() async {
   await Workmanager().registerPeriodicTask(
     "refreshPrayerTask",
     "refreshPrayerTimes",
-    frequency: const Duration(hours: 48), 
+    frequency: const Duration(hours: 48),
     existingWorkPolicy: ExistingWorkPolicy.keep,
     constraints: Constraints(
       networkType: NetworkType.connected,

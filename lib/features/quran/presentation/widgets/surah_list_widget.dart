@@ -25,10 +25,7 @@ class SurasListWidget extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Image.asset(AppImage.vectorNumber),
-              Text(
-                '${index + 1}',
-                style: AppStyles.bold16White,
-              ),
+              Text('${index + 1}', style: AppStyles.bold16White),
             ],
           ),
           SizedBox(width: 16.w),
@@ -36,16 +33,13 @@ class SurasListWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${surahModel.verses} آية',
-                style: AppStyles.bold16White,
+                surahModel.arabicName,
+                style: AppStyles.bold16White.copyWith(fontSize: 18.sp),
               ),
             ],
           ),
           const Spacer(),
-          Text(
-            surahModel.arabicName,
-            style: AppStyles.bold16White.copyWith(fontSize: 18.sp),
-          ),
+          Text('${surahModel.verses} آية', style: AppStyles.bold16White),
         ],
       ),
     );

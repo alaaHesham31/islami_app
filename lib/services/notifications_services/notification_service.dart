@@ -1,4 +1,3 @@
-// lib/services/notification_service.dart
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -7,9 +6,8 @@ import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:flutter_timezone/flutter_timezone.dart' as ftz;
 import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../home/time/prayer_times/prayer_repository.dart';
-import '../services/location_helper.dart';
+import '../../features/time/prayer_times/data/repositories/prayer_repository_impl.dart';
+import 'location_helper.dart';
 
 class NotificationService {
   NotificationService._();
@@ -131,8 +129,18 @@ class NotificationService {
       final keys = raw.keys.map((k) => k.toString()).toList()..sort();
       int scheduledCount = 0;
 
+      // Mapping English keys → Arabic display
+      const Map<String, String> prayerArabicNames = {
+        "Fajr": "الفجر",
+        "Dhuhr": "الظهر",
+        "Asr": "العصر",
+        "Maghrib": "المغرب",
+        "Isha": "العشاء",
+      };
+
+      final prayerOrder = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+
       for (final dateKey in keys) {
-        // break if beyond daysAhead from today
         DateTime date;
         try {
           date = DateTime.parse(dateKey); // expect YYYY-MM-DD
@@ -145,23 +153,24 @@ class NotificationService {
         if (diffDays >= daysAhead) continue; // beyond requested window
 
         final inner = Map<String, dynamic>.from(raw[dateKey] as Map);
-        // prayers order
-        final prayerNames = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-        for (var i = 0; i < prayerNames.length; i++) {
-          final name = prayerNames[i];
-          if (!inner.containsKey(name)) continue;
-          final msUtc = inner[name] as int;
+
+        for (var i = 0; i < prayerOrder.length; i++) {
+          final engKey = prayerOrder[i];
+          if (!inner.containsKey(engKey)) continue;
+
+          final msUtc = inner[engKey] as int;
           final dtLocal = DateTime.fromMillisecondsSinceEpoch(msUtc, isUtc: true).toLocal();
           final scheduledLocal = dtLocal.subtract(Duration(minutes: minutesBefore));
           final scheduledTz = tz.TZDateTime.from(scheduledLocal, tz.local);
 
-          // ensure we don't schedule in the past
           if (scheduledTz.isBefore(nowLocal)) {
-            debugPrint('⚠️ Not scheduling $name for $dateKey because scheduled time $scheduledTz is in the past');
+            debugPrint('⚠️ Not scheduling $engKey for $dateKey because scheduled time $scheduledTz is in the past');
             continue;
           }
 
+          final arabicName = prayerArabicNames[engKey]!;
           final id = _idFor(date, i);
+
           final androidDetails = AndroidNotificationDetails(
             _channelId,
             _channelName,
@@ -169,22 +178,21 @@ class NotificationService {
             importance: Importance.max,
             priority: Priority.high,
             playSound: true,
-            // keep defaults (avoid custom sound troubleshooting)
           );
           final details = NotificationDetails(android: androidDetails, iOS: DarwinNotificationDetails());
 
           await _fln.zonedSchedule(
             id,
-            'أذان $name',
-            'ستبدأ الصلاة بعد $minutesBefore دقيقة',
+            'أذان $arabicName',
+            'ستبدأ صلاة $arabicName بعد $minutesBefore دقيقة',
             scheduledTz,
             details,
             androidAllowWhileIdle: true,
             uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-            payload: 'prayer|$name|$dateKey',
+            payload: 'prayer|$engKey|$dateKey',
           );
 
-          debugPrint('📅 Scheduled $name (id=$id) at $scheduledTz (${scheduledLocal.toIso8601String()})');
+          debugPrint('📅 Scheduled $engKey ($arabicName) (id=$id) at $scheduledTz (${scheduledLocal.toIso8601String()})');
           scheduledCount++;
         }
       }
@@ -221,7 +229,7 @@ class NotificationService {
       final tomorrow = DateTime.now().add(const Duration(days: 1));
       final dayKey = '${tomorrow.year}-${tomorrow.month.toString().padLeft(2,'0')}-${tomorrow.day.toString().padLeft(2,'0')}';
 
-      final repo = PrayerRepository();
+      final repo = PrayerRepositoryImpl();
       final times = await repo.getPrayerTimes(lat, lng, date: DateTime(tomorrow.year, tomorrow.month, tomorrow.day), forceRefresh: false);
 
       // write into cache (so next run can schedule month)

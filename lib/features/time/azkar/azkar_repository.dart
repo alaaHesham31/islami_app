@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:islami_app_demo/model/AzkarModel.dart';
+import 'package:islami_app_demo/features/time/azkar/AzkarModel.dart';
 
 class AzkarRepository {
   static Future<Map<String, List<AzkarModel>>> loadAzkarFiles() async {

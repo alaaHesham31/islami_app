@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:islami_app_demo/model/AzkarModel.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:islami_app_demo/features/time/azkar/AzkarModel.dart';
 
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_styles.dart';
@@ -23,36 +24,34 @@ class AzkarDetailsScreen extends StatelessWidget {
         title: Text(category, style: TextStyle(color: AppColors.primaryColor)),
       ),
       body: Container(
-        padding: const EdgeInsets.all(32),
+        padding:  EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.h),
         decoration: BoxDecoration(
           color: AppColors.blackColor,
         ),
         child: ListView.separated(
           itemCount: items.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 40),
+          separatorBuilder: (context, index) =>  SizedBox(height: 40.h),
           itemBuilder: (context, index) {
             return Stack(
               clipBehavior: Clip.none,
               children: [
-                // Main Azkar container
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20 , bottom: 32),
+                  padding:  EdgeInsets.only(top: 20.h, left: 20.w, right: 20.w , bottom: 32.h),
                   decoration: BoxDecoration(
                     color: AppColors.blackColor,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(color: AppColors.primaryColor, width: 1),
                   ),
                   child: Text(
                     items[index].content ?? '',
                     style: AppStyles.bold18White,
-                    textAlign: TextAlign.end,
+                    textAlign: TextAlign.start,
                   ),
                 ),
 
-                // Positioned repetition container
                 Positioned(
-                  bottom: -20, 
+                  bottom: -20,
                   left: 0,
                   right: 0,
                   child: Container(
@@ -66,7 +65,10 @@ class AzkarDetailsScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                       
+                        Text(
+                          'التكرار',
+                          style: AppStyles.semi18White,
+                        ),
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 14, vertical: 6),
@@ -83,10 +85,7 @@ class AzkarDetailsScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                         Text(
-                          'التكرار',
-                          style: AppStyles.semi18White,
-                        ),
+
                       ],
                     ),
                   ),

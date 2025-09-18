@@ -1,14 +1,11 @@
-// lib/features/download/data/datasources/download_local_datasource.dart
 import 'dart:io';
 import 'package:islami_app_demo/features/download/data/models/DownloadedSurahModel.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hive/hive.dart';
 
-const String downloadsBoxName = 'downloadsBox'; // KEEP the existing name used across your app
+const String downloadsBoxName = 'downloadsBox';
 
-/// Concrete local datasource used by the repository.
-/// - Provides local path creation
-/// - CRUD for Hive saved downloads
+
 class DownloadLocalDataSource {
   DownloadLocalDataSource();
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:islami_app_demo/home/home_screen.dart';
 
-import '../utils/app_colors.dart';
-import '../utils/app_image.dart';
-import '../utils/app_styles.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_image.dart';
+import '../../utils/app_styles.dart';
+import 'home_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   static const String routeName = 'onboardingScreen';

@@ -1,8 +1,7 @@
-// lib/features/download/data/services/download_service.dart
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import '../../../../shared/managers/download_progress_manager.dart';
+import '../../../../services/download/download_progress_manager.dart';
 
 
 import '../../domain/repositories/download_repository.dart';
@@ -13,7 +12,6 @@ class DownloadService {
   DownloadService({required DownloadRepository repository})
       : _repository = repository;
 
-  /// Public API used by the UI.
   Future<void> downloadSurah({
     required int reciterId,
     required int surahId,
@@ -22,7 +20,6 @@ class DownloadService {
   }) async {
     final key = '${reciterId}_$surahId';
 
-    // notify start
     DownloadProgressManager.instance.setProgress(key, 0.0);
 
     try {
@@ -31,7 +28,6 @@ class DownloadService {
         surahId: surahId,
         remoteUrl: remoteUrl,
         onProgress: (prog) {
-          // update UI manager and forward callback
           DownloadProgressManager.instance.setProgress(key, prog);
           if (onProgress != null) onProgress(prog);
         },

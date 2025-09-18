@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:islami_app_demo/features/global_player/mini_player.dart';
-import 'package:islami_app_demo/home/time/time_tab.dart';
-import '../features/hadeath/presentation/pages/hadeath_tab.dart';
-import '../features/quran/presentation/screens/quran_tab.dart';
-import '../features/radio/presentation/radio_tab.dart';
-import '../features/sebha/presentation/sebha_tab.dart';
-import '../utils/app_colors.dart';
-import '../utils/app_image.dart';
+import '../hadeath/presentation/pages/hadeath_tab.dart';
+import '../quran/presentation/screens/quran_tab.dart';
+import '../radio/presentation/radio_tab.dart';
+import '../sebha/presentation/sebha_tab.dart';
+import '../time/prayer_times/presentation/pages/time_tab.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_image.dart';
 import 'providers/home_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -25,7 +25,7 @@ class HomeScreen extends ConsumerWidget {
       HadeathTab(),
       const SebhaTab(),
       RadioTab(),
-      const TimeTab(),
+       TimeTab(),
     ];
 
     return Container(
@@ -103,7 +103,6 @@ class HomeScreen extends ConsumerWidget {
     return selectedIndex == index
         ? Container(
           padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 20.w),
-          // margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
           decoration: BoxDecoration(
             color: AppColors.blackColorBg,
             borderRadius: BorderRadius.circular(20),
