@@ -1,4 +1,3 @@
-// improved_global_player_notifier.dart
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +7,6 @@ import 'global_play_states.dart';
 
 class GlobalPlayerNotifier extends StateNotifier<GlobalPlayerState> {
   GlobalPlayerNotifier() : super(const GlobalPlayerState()) {
-    // Throttled duration updates
     _durationSub = _player.durationStream.listen((d) {
       if (d != null) state = state.copyWith(duration: d);
     });
@@ -83,9 +81,9 @@ Future<void> _playReciterInternal(
     );
 
     if (isLocal) {
-      await _player.setFilePath(urlOrPath); // لو ملف محلي
+      await _player.setFilePath(urlOrPath);
     } else {
-      await _player.setUrl(urlOrPath); // لو stream من الانترنت
+      await _player.setUrl(urlOrPath);
     }
 
     if (reqId != _playRequestId) return;

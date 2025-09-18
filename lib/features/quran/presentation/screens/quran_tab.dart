@@ -1,4 +1,3 @@
-// lib/features/quran/presentation/pages/quran_tab.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,7 +46,7 @@ class QuranTab extends ConsumerWidget {
                       cursorColor: AppColors.whiteColor,
                       decoration: InputDecoration(
                         hintText: 'اسم السورة',
-                        hintStyle: AppStyles.bold16White.copyWith(color: AppColors.whiteColor.withOpacity(0.7)),
+                        hintStyle: AppStyles.bold16White.copyWith(color: AppColors.whiteColor.withValues(alpha: 0.7)),
                         prefixIcon: ImageIcon(
                           AssetImage(AppImage.searchIcon),
                           color: AppColors.primaryColor,
@@ -65,7 +64,6 @@ class QuranTab extends ConsumerWidget {
 
                     SizedBox(height: 20.h),
 
-                    // Most recently (only visible when search is empty)
                     if (searchText.isEmpty) ...[
                       Text('المقروءة مؤخراً', style: AppStyles.bold16White),
                       SizedBox(height: 12.h),
@@ -93,11 +91,9 @@ class QuranTab extends ConsumerWidget {
                       SizedBox(height: 20.h),
                     ],
 
-                    // Surah list title
                     Text('قائمة السور', style: AppStyles.bold16White),
                     SizedBox(height: 20.h),
 
-                    // Surahs
                     surahsAsync.when(
                       data: (surahs) {
                         final filtered = surahs.where((s) {
@@ -128,7 +124,6 @@ class QuranTab extends ConsumerWidget {
                               final sura = filtered[index];
                               return InkWell(
                                 onTap: () {
-                                  // store recent
                                   ref.read(recentSurasProvider.notifier).addRecent(sura);
 
                                   Navigator.pushNamed(

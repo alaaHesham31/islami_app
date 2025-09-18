@@ -141,7 +141,6 @@ class MiniPlayer extends ConsumerWidget {
             ],
           ),
 
-          // ✅ Show progress bar only for Surah playback
           if (playerState.sourceType == PlayerSourceType.reciter &&
               durationSeconds > 0)
             Row(
