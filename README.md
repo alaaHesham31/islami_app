@@ -14,6 +14,12 @@ The app is optimized for performance with **Hive caching**, **file system downlo
 
 ---
 
+## 🚀 Download
+You can try the latest version of Islami App on Android:  
+👉 [Download APK](https://github.com/alaaHesham31/islami_app/releases/tag/v1.0.0-beta)
+
+---
+
 ## 📸 Screenshots  
 
 > *App screens include:*
@@ -170,7 +176,7 @@ It’s both a **real-world utility app for Muslims** and a **portfolio showcase 
 ## 📬 Contact  
 
 👤 Developed by Alaa Hesham  
-📧 alaa.elkeshky33@gmail.com  
-💼 https://www.linkedin.com/in/alaaelkeshky/
+📧 [email](alaa.elkeshky33@gmail.com)  
+💼 [linkedin account](https://www.linkedin.com/in/alaaelkeshky/)
 
 
