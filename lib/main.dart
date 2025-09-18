@@ -25,7 +25,6 @@ Future<void> main() async {
   await NotificationService.init();
   await NotificationService.requestPermissionsAndLog();
 
-
   // Schedule all cached prayer times for the next 31 days
   await NotificationService.scheduleMonthFromHive(
     minutesBefore: 10,

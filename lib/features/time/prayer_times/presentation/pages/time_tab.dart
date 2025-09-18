@@ -91,7 +91,25 @@ class _TimeTabState extends ConsumerState<TimeTab>
     });
 
     final gregorian = DateFormat('dd MMM, \nyyyy', 'ar').format(DateTime.now());
-    final hijri = HijriCalendar.now().toFormat("dd MMM, \nyyyy");
+    final hijri = HijriCalendar.now();
+
+    const arabicMonths = [
+      "محرم",
+      "صفر",
+      "ربيع الأول",
+      "ربيع الآخر",
+      "جمادى الأولى",
+      "جمادى الآخرة",
+      "رجب",
+      "شعبان",
+      "رمضان",
+      "شوال",
+      "ذو القعدة",
+      "ذو الحجة",
+    ];
+
+    final hijriText =
+        "${hijri.hDay} ${arabicMonths[hijri.hMonth - 1]}\n ${hijri.hYear}";
 
     if (state.loading) {
       return const Center(child: CircularProgressIndicator());
@@ -139,15 +157,18 @@ class _TimeTabState extends ConsumerState<TimeTab>
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(gregorian, style: AppStyles.semi16White),
+                                Text(
+                                  hijriText,
+                                  style: AppStyles.semi16White,
+                                  textAlign: TextAlign.start,
+                                ),
                                 Text(
                                   'مواقيت الصلاة\n${DateFormat('EEEE', 'ar').format(DateTime.now())}',
                                   style: AppStyles.semi20Brown,
                                   textAlign: TextAlign.center,
                                 ),
-                                Text(hijri,
-                                    style: AppStyles.semi16White,
-                                    textAlign: TextAlign.end),
+
+                                Text(gregorian, style: AppStyles.semi16White, textAlign: TextAlign.end,),
                               ],
                             ),
                             SizedBox(height: 24.h),
@@ -165,10 +186,14 @@ class _TimeTabState extends ConsumerState<TimeTab>
                                   return Align(
                                     alignment: Alignment.bottomCenter,
                                     child: _buildPrayTimeCard(
-                                        name, formatted, state.nextPrayer),
+                                      name,
+                                      formatted,
+                                      state.nextPrayer,
+                                    ),
                                   );
                                 },
-                                separatorBuilder: (_, __) => SizedBox(width: 12.w),
+                                separatorBuilder:
+                                    (_, __) => SizedBox(width: 12.w),
                                 itemCount: state.times!.length,
                               ),
                             ),
@@ -182,9 +207,10 @@ class _TimeTabState extends ConsumerState<TimeTab>
                                     style: AppStyles.semi16Brown,
                                     children: [
                                       TextSpan(
-                                        text: state.nextPrayer != null
-                                            ? '- ${_prayerNameAr[state.nextPrayer!] ?? state.nextPrayer} بعد ${_formatDuration(state.timeRemaining!)}'
-                                            : ' - لا يوجد',
+                                        text:
+                                            state.nextPrayer != null
+                                                ? '- ${_prayerNameAr[state.nextPrayer!] ?? state.nextPrayer} بعد ${_formatDuration(state.timeRemaining!)}'
+                                                : ' - لا يوجد',
                                         style: AppStyles.semi16Black,
                                       ),
                                     ],
@@ -196,7 +222,7 @@ class _TimeTabState extends ConsumerState<TimeTab>
                         ),
                       ),
                       SizedBox(height: 16.h),
-                       AzkarListSection(),
+                      AzkarListSection(),
                     ],
                   ),
                 ),
@@ -229,12 +255,16 @@ class _TimeTabState extends ConsumerState<TimeTab>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(_prayerNameAr[name] ?? name,
-              style: isNext ? AppStyles.bold22White : AppStyles.bold20White),
+          Text(
+            _prayerNameAr[name] ?? name,
+            style: isNext ? AppStyles.bold22White : AppStyles.bold20White,
+          ),
           Column(
             children: [
-              Text(formatted,
-                  style: isNext ? AppStyles.bold32White : AppStyles.bold28White),
+              Text(
+                formatted,
+                style: isNext ? AppStyles.bold32White : AppStyles.bold28White,
+              ),
               Text(amPm, style: AppStyles.small14White70),
             ],
           ),
