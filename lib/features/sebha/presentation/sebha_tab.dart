@@ -48,7 +48,7 @@ class _SebhaTabState extends ConsumerState<SebhaTab> {
               SizedBox(height: 20.h,),
               SizedBox(
                 width: double.infinity,
-                height: 490.h,
+                height: 435,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [

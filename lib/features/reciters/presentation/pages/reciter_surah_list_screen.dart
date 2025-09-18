@@ -5,10 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:islami_app_demo/features/download/data/models/DownloadedSurahModel.dart';
-
-import '../../../../home/radio/global_player/global_play_states.dart';
-import '../../../../home/radio/global_player/global_player_notifier.dart';
-import '../../../../home/radio/global_player/mini_player.dart';
+import '../../../global_player/global_play_states.dart';
+import '../../../global_player/global_player_notifier.dart';
+import '../../../global_player/mini_player.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_image.dart';
 import '../../../../utils/app_styles.dart';

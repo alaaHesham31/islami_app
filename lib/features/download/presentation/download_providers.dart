@@ -1,10 +1,9 @@
-// lib/features/download/presentation/download_providers.dart
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../shared/managers/download_progress_manager.dart'; // your project path
+import '../../../services/download/download_progress_manager.dart'; // your project path
 import '../data/datasources/download_local_datasource.dart';
 import '../data/datasources/download_remote_datasource.dart';
 import '../data/models/DownloadedSurahModel.dart';
@@ -28,22 +27,18 @@ final downloadRepositoryProvider = Provider<DownloadRepositoryImpl>((ref) {
   return DownloadRepositoryImpl(local: local, remote: remote);
 });
 
-/// Public facade used by UI
 final downloadServiceProvider = Provider<DownloadService>((ref) {
   final repo = ref.read(downloadRepositoryProvider);
   return DownloadService(repository: repo);
 });
 
-/// StreamProvider that bridges the DownloadProgressManager's ValueListenable -> Stream
 final downloadProgressMapProvider =
 StreamProvider<Map<String, double>>((ref) {
   final controller = StreamController<Map<String, double>>.broadcast();
 
   final listenable = DownloadProgressManager.instance.listenable;
 
-  // Defensive: support ValueNotifier/ValueListenable
   if (listenable is ValueListenable<Map<String, double>>) {
-    // push current value
     try {
       controller.add(listenable.value);
     } catch (_) {
@@ -70,14 +65,12 @@ StreamProvider<Map<String, double>>((ref) {
 
     return controller.stream;
   } else {
-    // Fallback: empty map stream
     controller.add({});
     controller.close();
     return controller.stream;
   }
 });
 
-/// Per-key convenience provider returning the progress (double?).
 final downloadProgressProvider =
 Provider.family<double?, String>((ref, key) {
   final asyncMap = ref.watch(downloadProgressMapProvider);
@@ -88,7 +81,6 @@ Provider.family<double?, String>((ref, key) {
   );
 });
 
-/// NEW: provider that returns persisted downloaded surahs from Hive
 final downloadedSurahsProvider =
 FutureProvider<Map<String, DownloadedSurahModel>>((ref) async {
   final local = ref.read(downloadLocalDataSourceProvider);

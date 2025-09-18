@@ -1,5 +1,3 @@
-// data/datasources/download_remote_datasource.dart
-import 'dart:io';
 import 'package:dio/dio.dart';
 
 
@@ -8,7 +6,6 @@ class DownloadRemoteDataSource {
   DownloadRemoteDataSource([Dio? dio]) : _dio = dio ?? Dio();
 
 
-  /// downloads remoteUrl -> localPath and reports progress via callback
   Future<void> downloadToFile(
       String remoteUrl,
       String localPath,
@@ -29,7 +26,7 @@ class DownloadRemoteDataSource {
         ),
       );
     } on DioException {
-      rethrow; // bubble up to repository/service
+      rethrow;
     }
   }
 }

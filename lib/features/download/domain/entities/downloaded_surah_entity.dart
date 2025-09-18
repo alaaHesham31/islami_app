@@ -1,4 +1,3 @@
-// domain/entities/downloaded_surah_entity.dart
 class DownloadedSurahEntity {
   final int reciterId;
   final int surahId;

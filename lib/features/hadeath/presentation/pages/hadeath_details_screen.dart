@@ -1,4 +1,3 @@
-// lib/features/hadeath/presentation/pages/hadeath_details_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../utils/app_colors.dart';

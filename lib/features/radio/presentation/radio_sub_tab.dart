@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../home/radio/global_player/global_play_states.dart';
-import '../../../home/radio/global_player/global_player_notifier.dart';
+
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_image.dart';
 import '../../../utils/app_styles.dart';
+import '../../global_player/global_play_states.dart';
+import '../../global_player/global_player_notifier.dart';
 import '../application/radio_notifier.dart';
 
 class RadioSubTabContent extends ConsumerWidget {

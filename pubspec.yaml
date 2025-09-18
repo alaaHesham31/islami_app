@@ -42,6 +42,10 @@ dependencies:
   intl: any
   hijri: ^3.0.0
   equatable: ^2.0.7
+  workmanager: ^0.7.0
+  android_alarm_manager_plus: ^4.0.7
+  flutter_launcher_icons: ^0.14.4
+
 
 
 
