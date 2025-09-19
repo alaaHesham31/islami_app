@@ -57,46 +57,48 @@ class _HadeathTabState extends State<HadeathTab> {
           fit: BoxFit.fill,
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 16.h, right: 32.w, left: 32.w),
-              child: Image.asset(AppImage.logoHeader),
-            ),
-            Expanded(
-              child: hadeathList.isEmpty
-                  ? Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
-                  : PageView.builder(
-                controller: pageController,
-                itemCount: hadeathList.length,
-                itemBuilder: (context, index) {
-                  double scale = currentPage == index ? 1.0 : 0.8;
-
-                  return TweenAnimationBuilder(
-                    duration: const Duration(milliseconds: 350),
-                    tween: Tween(begin: scale, end: scale),
-                    builder: (context, value, child) {
-                      return Transform.scale(
-                        scale: value,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              HadeathDetailsScreen.routeName,
-                              arguments: hadeathList[index],
-                            );
-                          },
-                          child: HadeathCard(hadeath: hadeathList[index]),
-                        ),
-                      );
-                    },
-                  );
-                },
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 16.h, right: 32.w, left: 32.w),
+                child: Image.asset(AppImage.logoHeader, height: 100.h, width: 200.w),
               ),
-            ),
-          ],
+              Expanded(
+                child: hadeathList.isEmpty
+                    ? Center(child: CircularProgressIndicator(color: AppColors.primaryColor))
+                    : PageView.builder(
+                  controller: pageController,
+                  itemCount: hadeathList.length,
+                  itemBuilder: (context, index) {
+                    double scale = currentPage == index ? 1.0 : 0.8;
+        
+                    return TweenAnimationBuilder(
+                      duration: const Duration(milliseconds: 350),
+                      tween: Tween(begin: scale, end: scale),
+                      builder: (context, value, child) {
+                        return Transform.scale(
+                          scale: value,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                HadeathDetailsScreen.routeName,
+                                arguments: hadeathList[index],
+                              );
+                            },
+                            child: HadeathCard(hadeath: hadeathList[index]),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
