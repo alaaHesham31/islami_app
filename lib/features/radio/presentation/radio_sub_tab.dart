@@ -53,7 +53,7 @@ class RadioSubTabContent extends ConsumerWidget {
                 isThisRadio && playerState.status == PlayerStatus.playing;
 
             return Container(
-              height: 120.h,
+              height: 100.h,
               decoration: BoxDecoration(
                 color: AppColors.primaryColor,
                 borderRadius: BorderRadius.circular(20.r),

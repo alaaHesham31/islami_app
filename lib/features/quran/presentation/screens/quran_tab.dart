@@ -34,7 +34,7 @@ class QuranTab extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Image.asset(AppImage.logoHeader),
+                    Image.asset(AppImage.logoHeader, height: 100.h, width: 200.w,),
                     SizedBox(height: 12.h),
 
                     // Search Field
@@ -73,7 +73,7 @@ class QuranTab extends ConsumerWidget {
                         )
                       else
                         SizedBox(
-                          height: 180.h,
+                          height: 140.h,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: recent.length,

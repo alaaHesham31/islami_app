@@ -27,62 +27,64 @@ class _SebhaTabState extends ConsumerState<SebhaTab> {
           fit: BoxFit.cover,
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 16.h,
-                  right: 32.w,
-                  left: 32.w,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 16.h,
+                    right: 32.w,
+                    left: 32.w,
+                  ),
+                  child: Image.asset(AppImage.logoHeader, height: 100.h, width: 200.w),
                 ),
-                child: Image.asset(AppImage.logoHeader),
-              ),
-              Text(
-                'سَبِّحِ اسْمَ رَبِّكَ الأعلى',
-                style: AppStyles.bold20White.copyWith(fontSize: 32.sp),
-              ),
-              SizedBox(height: 20.h,),
-              SizedBox(
-                width: double.infinity,
-                height: 435,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Image.asset(AppImage.fixedPartOfSebha),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '${zikr.text}\n\n${zikr.count}',
-                        style: AppStyles.bold20White.copyWith(fontSize: 32.sp),
-                        textAlign: TextAlign.center,
+                Text(
+                  'سَبِّحِ اسْمَ رَبِّكَ الأعلى',
+                  style: AppStyles.bold20White.copyWith(fontSize: 32.sp),
+                ),
+                SizedBox(height: 20.h,),
+                SizedBox(
+                  width: double.infinity,
+                  height: 435,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Image.asset(AppImage.fixedPartOfSebha),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Transform.rotate(
-                        angle: rotate,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              rotate += 0.1;
-                            });
-                            ref.read(sebhaProvider.notifier).onTasbeehClick();
-                          },
-                          child: Image.asset(AppImage.sebhaRotateBody),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          '${zikr.text}\n\n${zikr.count}',
+                          style: AppStyles.bold20White.copyWith(fontSize: 32.sp),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    ),
-                  ],
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Transform.rotate(
+                          angle: rotate,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                rotate += 0.1;
+                              });
+                              ref.read(sebhaProvider.notifier).onTasbeehClick();
+                            },
+                            child: Image.asset(AppImage.sebhaRotateBody),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

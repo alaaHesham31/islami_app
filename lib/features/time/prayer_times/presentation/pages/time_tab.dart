@@ -128,106 +128,109 @@ class _TimeTabState extends ConsumerState<TimeTab>
           fit: BoxFit.cover,
         ),
       ),
-      child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Column(
-            children: [
-              Image.asset(AppImage.logoHeader),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 280.h,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 12.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.brownColor,
-                          borderRadius: BorderRadius.circular(40.r),
-                          image: DecorationImage(
-                            image: AssetImage(AppImage.prayerTimesBg),
-                            fit: BoxFit.fill,
+      child: SafeArea(
+        child: Scaffold(
+          body: Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Column(
+              children: [
+                Image.asset(AppImage.logoHeader,height: 100.h, width: 200.w),
+                SizedBox(height: 20.h,),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 280.h,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20.w,
+                            vertical: 12.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.brownColor,
+                            borderRadius: BorderRadius.circular(40.r),
+                            image: DecorationImage(
+                              image: AssetImage(AppImage.prayerTimesBg),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    hijriText,
+                                    style: AppStyles.semi16White,
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  Text(
+                                    'مواقيت الصلاة\n${DateFormat('EEEE', 'ar').format(DateTime.now())}',
+                                    style: AppStyles.semi20Brown,
+                                    textAlign: TextAlign.center,
+                                  ),
+        
+                                  Text(gregorian, style: AppStyles.semi16White, textAlign: TextAlign.end,),
+                                ],
+                              ),
+                              SizedBox(height: 24.h),
+                              SizedBox(
+                                height: 140.h,
+                                child: ListView.separated(
+                                  controller: _scrollController,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    final keys = state.times!.keys.toList();
+                                    final name = keys[index];
+                                    final time = state.times![name]!;
+                                    final formatted =
+                                        "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}";
+                                    return Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: _buildPrayTimeCard(
+                                        name,
+                                        formatted,
+                                        state.nextPrayer,
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder:
+                                      (_, __) => SizedBox(width: 12.w),
+                                  itemCount: state.times!.length,
+                                ),
+                              ),
+                              SizedBox(height: 12.h),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text.rich(
+                                    TextSpan(
+                                      text: 'الصلاة التالية ',
+                                      style: AppStyles.semi16Brown,
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              state.nextPrayer != null
+                                                  ? '- ${_prayerNameAr[state.nextPrayer!] ?? state.nextPrayer} بعد ${_formatDuration(state.timeRemaining!)}'
+                                                  : ' - لا يوجد',
+                                          style: AppStyles.semi16Black,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  hijriText,
-                                  style: AppStyles.semi16White,
-                                  textAlign: TextAlign.start,
-                                ),
-                                Text(
-                                  'مواقيت الصلاة\n${DateFormat('EEEE', 'ar').format(DateTime.now())}',
-                                  style: AppStyles.semi20Brown,
-                                  textAlign: TextAlign.center,
-                                ),
-
-                                Text(gregorian, style: AppStyles.semi16White, textAlign: TextAlign.end,),
-                              ],
-                            ),
-                            SizedBox(height: 24.h),
-                            SizedBox(
-                              height: 140.h,
-                              child: ListView.separated(
-                                controller: _scrollController,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  final keys = state.times!.keys.toList();
-                                  final name = keys[index];
-                                  final time = state.times![name]!;
-                                  final formatted =
-                                      "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}";
-                                  return Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: _buildPrayTimeCard(
-                                      name,
-                                      formatted,
-                                      state.nextPrayer,
-                                    ),
-                                  );
-                                },
-                                separatorBuilder:
-                                    (_, __) => SizedBox(width: 12.w),
-                                itemCount: state.times!.length,
-                              ),
-                            ),
-                            SizedBox(height: 12.h),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text.rich(
-                                  TextSpan(
-                                    text: 'الصلاة التالية ',
-                                    style: AppStyles.semi16Brown,
-                                    children: [
-                                      TextSpan(
-                                        text:
-                                            state.nextPrayer != null
-                                                ? '- ${_prayerNameAr[state.nextPrayer!] ?? state.nextPrayer} بعد ${_formatDuration(state.timeRemaining!)}'
-                                                : ' - لا يوجد',
-                                        style: AppStyles.semi16Black,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 16.h),
-                      AzkarListSection(),
-                    ],
+                        SizedBox(height: 16.h),
+                        AzkarListSection(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -52,7 +52,7 @@ class SuraDetailsScreen extends ConsumerWidget {
             children: [
               SizedBox(height: 20.h),
               Text(
-                sura.arabicName,
+                'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ',
                 style: AppStyles.bold22Primary,
                 textAlign: TextAlign.center,
               ),
