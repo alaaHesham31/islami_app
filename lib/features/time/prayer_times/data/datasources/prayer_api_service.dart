@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
 class PrayerApiService {
   final String base = 'https://api.aladhan.com/v1';
+  final http.Client client;
 
+  PrayerApiService({http.Client? client}) : client = client ?? http.Client();
 
   Future<Map<String, DateTime>> fetchPrayerTimes(
       double lat,
@@ -16,12 +17,11 @@ class PrayerApiService {
     final url = Uri.parse(
       '$base/timings/$timestamp?latitude=$lat&longitude=$lng&method=2',
     );
-    final resp = await http.get(url);
+    final resp = await client.get(url);
     if (resp.statusCode != 200) throw Exception('Failed to fetch times: ${resp.statusCode}');
     final body = jsonDecode(resp.body) as Map<String, dynamic>;
     final data = body['data'] as Map<String, dynamic>;
     final timings = (data['timings'] as Map<String, dynamic>);
-
 
     DateTime parseTime(String hhmm) {
       final cleaned = RegExp(r'(\d{1,2}):(\d{2})').firstMatch(hhmm);
@@ -30,7 +30,6 @@ class PrayerApiService {
       final minute = int.parse(cleaned.group(2)!);
       return DateTime(date.year, date.month, date.day, hour, minute);
     }
-
 
     final map = <String, DateTime>{};
     for (final k in ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']) {
